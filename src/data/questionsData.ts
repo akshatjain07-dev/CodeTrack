@@ -1,0 +1,2371 @@
+import type { Question, Topic } from '../types';
+
+export const TOPICS: Topic[] = [
+  { id: 'arrays', name: 'Arrays', displayOrder: 1, description: 'Vectors, 2D matrices, Kadane, two pointer techniques, and hashing' },
+  { id: 'binary-search', name: 'Binary Search', displayOrder: 2, description: '1D arrays, rotated sorted arrays, search space reductions, and 2D matrices' },
+  { id: 'recursion', name: 'Recursion & Backtracking', displayOrder: 3, description: 'Subsequences, permutations, combinations, N-Queens, and Sudoku' },
+  { id: 'linked-list', name: 'Linked List', displayOrder: 4, description: 'Singly and Doubly Linked Lists, reversals, fast & slow pointers, and sorting' },
+  { id: 'bit-manipulation', name: 'Bit Manipulation', displayOrder: 5, description: 'Bitwise operators, XOR properties, masks, and binary arithmetic' },
+  { id: 'greedy', name: 'Greedy Algorithms', displayOrder: 6, description: 'Interval scheduling, activity selection, jumps, and optimal decision making' },
+  { id: 'sliding-window', name: 'Sliding Window & 2 Pointers', displayOrder: 7, description: 'Fixed and variable size windows, subarray constraints, and frequency maps' },
+  { id: 'stacks-queues', name: 'Stacks & Queues', displayOrder: 8, description: 'Monotonic stacks, next greater element, LRU cache, and min stacks' },
+  { id: 'binary-trees', name: 'Binary Trees', displayOrder: 9, description: 'Traversals, depth, diameter, views, ancestors, and tree construction' },
+  { id: 'bst', name: 'Binary Search Trees', displayOrder: 10, description: 'BST invariants, validation, LCA, iterators, and floor/ceil operations' },
+  { id: 'heaps', name: 'Heaps & Priority Queues', displayOrder: 11, description: 'Heapify, top-K frequent, running medians, and merge K sorted lists' },
+  { id: 'graphs', name: 'Graphs', displayOrder: 12, description: 'BFS/DFS, topological sort, Dijkstra, Bellman-Ford, Floyd Warshall, MST, and Disjoint Set' },
+  { id: 'dp', name: 'Dynamic Programming', displayOrder: 13, description: '1D/2D memoization, grid paths, stock series, subsequences, LIS, and MCM' },
+  { id: 'tries', name: 'Tries', displayOrder: 14, description: 'Prefix trees, autocomplete, bitwise XOR maximum queries' },
+  { id: 'strings-advance', name: 'Advanced Strings', displayOrder: 15, description: 'KMP, Z-algorithm, Rabin-Karp, and pattern matching' },
+  { id: 'maths', name: 'Mathematics & Number Theory', displayOrder: 16, description: 'Sieve of Eratosthenes, prime factorization, GCD, and modular arithmetic' },
+];
+
+export const QUESTIONS: Question[] = [
+  // ===================== ARRAYS (Page 1) =====================
+  {
+    id: 'arr-01',
+    title: 'Majority Element-I',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/majority-element/',
+    articleUrl: 'https://takeuforward.org/data-structure/find-the-majority-element-that-occurs-more-than-n-2-times/',
+    youtubeUrl: 'https://www.youtube.com/watch?v=nP_ns3uSh80'
+  },
+  {
+    id: 'arr-02',
+    title: 'Leaders in an Array',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Easy',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/leaders-in-an-array-1587115620/1',
+    articleUrl: 'https://takeuforward.org/data-structure/leaders-in-an-array/'
+  },
+  {
+    id: 'arr-03',
+    title: 'Rearrange array elements by sign',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/rearrange-array-elements-by-sign/',
+    articleUrl: 'https://takeuforward.org/arrays/rearrange-array-elements-by-sign/'
+  },
+  {
+    id: 'arr-04',
+    title: 'Print the matrix in spiral manner',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/spiral-matrix/',
+    articleUrl: 'https://takeuforward.org/data-structure/spiral-traversal-of-matrix/'
+  },
+  {
+    id: 'arr-05',
+    title: "Pascal's Triangle I",
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/pascals-triangle/',
+    articleUrl: 'https://takeuforward.org/data-structure/program-to-generate-pascals-triangle/'
+  },
+  {
+    id: 'arr-06',
+    title: "Pascal's Triangle II",
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/pascals-triangle-ii/'
+  },
+  {
+    id: 'arr-07',
+    title: "Pascal's Triangle III",
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Medium',
+    platform: 'TakeUForward',
+    problemUrl: 'https://takeuforward.org/data-structure/program-to-generate-pascals-triangle/'
+  },
+  {
+    id: 'arr-08',
+    title: 'Rotate matrix by 90 degrees',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/rotate-image/',
+    articleUrl: 'https://takeuforward.org/data-structure/rotate-image-by-90-degree/'
+  },
+  {
+    id: 'arr-09',
+    title: 'Two Sum',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/two-sum/',
+    articleUrl: 'https://takeuforward.org/data-structure/two-sum-check-if-a-pair-with-given-sum-exists-in-array/'
+  },
+  {
+    id: 'arr-10',
+    title: '3 Sum',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/3sum/',
+    articleUrl: 'https://takeuforward.org/data-structure/3-sum-find-triplets-that-add-up-to-a-zero/'
+  },
+  {
+    id: 'arr-11',
+    title: '4 Sum',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/4sum/',
+    articleUrl: 'https://takeuforward.org/data-structure/4-sum-find-quads-that-add-up-to-a-target-value/'
+  },
+  {
+    id: 'arr-12',
+    title: "Sort an array of 0's 1's and 2's",
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/sort-colors/',
+    articleUrl: 'https://takeuforward.org/data-structure/sort-an-array-of-0s-1s-and-2s/'
+  },
+  {
+    id: 'arr-13',
+    title: "Kadane's Algorithm",
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/maximum-subarray/',
+    articleUrl: 'https://takeuforward.org/data-structure/kadanes-algorithm-maximum-subarray-sum-in-an-array/'
+  },
+  {
+    id: 'arr-14',
+    title: 'Next Permutation',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/next-permutation/',
+    articleUrl: 'https://takeuforward.org/data-structure/next_permutation-find-next-lexicographically-greater-permutation/'
+  },
+  {
+    id: 'arr-15',
+    title: 'Majority Element-II',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Hard',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/majority-element-ii/',
+    articleUrl: 'https://takeuforward.org/data-structure/majority-elementsn-3-times-find-the-elements-that-appears-more-than-n-3-times-in-an-array/'
+  },
+  {
+    id: 'arr-16',
+    title: 'Find the repeating and missing number',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Hard',
+    difficulty: 'Hard',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/find-missing-and-repeating2512/1',
+    articleUrl: 'https://takeuforward.org/data-structure/find-the-repeating-and-missing-numbers/'
+  },
+  {
+    id: 'arr-17',
+    title: 'Count Inversions',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Hard',
+    difficulty: 'Hard',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/inversion-of-array-1587115620/1',
+    articleUrl: 'https://takeuforward.org/data-structure/count-inversions-in-an-array/'
+  },
+  {
+    id: 'arr-18',
+    title: 'Reverse Pairs',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Hard',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/reverse-pairs/',
+    articleUrl: 'https://takeuforward.org/data-structure/count-reverse-pairs/'
+  },
+  {
+    id: 'arr-19',
+    title: 'Maximum Product Subarray in an Array',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Hard',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/maximum-product-subarray/',
+    articleUrl: 'https://takeuforward.org/data-structure/maximum-product-subarray-in-an-array/'
+  },
+  {
+    id: 'arr-20',
+    title: 'Merge two sorted arrays without extra space',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Arrays Hard',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/merge-sorted-array/',
+    articleUrl: 'https://takeuforward.org/data-structure/merge-two-sorted-arrays-without-extra-space/'
+  },
+  {
+    id: 'arr-21',
+    title: 'Longest Consecutive Sequence in an Array',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Hashing',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/longest-consecutive-sequence/',
+    articleUrl: 'https://takeuforward.org/data-structure/longest-consecutive-sequence-in-an-array/'
+  },
+  {
+    id: 'arr-22',
+    title: 'Longest subarray with sum K',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Hashing',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1',
+    articleUrl: 'https://takeuforward.org/data-structure/longest-subarray-with-given-sum-k/'
+  },
+  {
+    id: 'arr-23',
+    title: 'Count subarrays with given sum',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Hashing',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/subarray-sum-equals-k/',
+    articleUrl: 'https://takeuforward.org/arrays/count-subarray-sum-equals-k/'
+  },
+  {
+    id: 'arr-24',
+    title: 'Count subarrays with given xor K',
+    topicId: 'arrays',
+    topicName: 'Arrays',
+    subtopic: 'Hashing',
+    difficulty: 'Medium',
+    platform: 'CodingNinjas',
+    problemUrl: 'https://www.naukri.com/code360/problems/subarrays-with-xor-k_6826258',
+    articleUrl: 'https://takeuforward.org/data-structure/count-the-number-of-subarrays-with-a-given-xor-k/'
+  },
+
+  // ===================== BINARY SEARCH (Page 1 & 2) =====================
+  {
+    id: 'bs-01',
+    title: 'Search X in sorted array',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '1D Arrays',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/binary-search/',
+    articleUrl: 'https://takeuforward.org/data-structure/binary-search-explained/'
+  },
+  {
+    id: 'bs-02',
+    title: 'Lower Bound',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '1D Arrays',
+    difficulty: 'Easy',
+    platform: 'CodingNinjas',
+    problemUrl: 'https://www.naukri.com/code360/problems/lower-bound_8165382',
+    articleUrl: 'https://takeuforward.org/arrays/implement-lower-bound-bs-2/'
+  },
+  {
+    id: 'bs-03',
+    title: 'Upper Bound',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '1D Arrays',
+    difficulty: 'Easy',
+    platform: 'CodingNinjas',
+    problemUrl: 'https://www.naukri.com/code360/problems/implement-upper-bound_8165383',
+    articleUrl: 'https://takeuforward.org/arrays/implement-upper-bound/'
+  },
+  {
+    id: 'bs-04',
+    title: 'Search insert position',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '1D Arrays',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/search-insert-position/',
+    articleUrl: 'https://takeuforward.org/arrays/search-insert-position/'
+  },
+  {
+    id: 'bs-05',
+    title: 'Floor and Ceil in Sorted Array',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '1D Arrays',
+    difficulty: 'Easy',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/ceil-the-floor2824/1',
+    articleUrl: 'https://takeuforward.org/arrays/floor-and-ceil-in-sorted-array/'
+  },
+  {
+    id: 'bs-06',
+    title: 'First and last occurrence',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '1D Arrays',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/',
+    articleUrl: 'https://takeuforward.org/data-structure/last-occurrence-in-a-sorted-array/'
+  },
+  {
+    id: 'bs-07',
+    title: 'Search in rotated sorted array-I',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Rotated Sorted Arrays',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/search-in-rotated-sorted-array/',
+    articleUrl: 'https://takeuforward.org/data-structure/search-element-in-a-rotated-sorted-array/'
+  },
+  {
+    id: 'bs-08',
+    title: 'Search in rotated sorted array-II',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Rotated Sorted Arrays',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/search-in-rotated-sorted-array-ii/',
+    articleUrl: 'https://takeuforward.org/arrays/search-element-in-rotated-sorted-array-ii/'
+  },
+  {
+    id: 'bs-09',
+    title: 'Find minimum in Rotated Sorted Array',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Rotated Sorted Arrays',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/',
+    articleUrl: 'https://takeuforward.org/data-structure/minimum-in-rotated-sorted-array/'
+  },
+  {
+    id: 'bs-10',
+    title: 'Find out how many times the array is rotated',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Rotated Sorted Arrays',
+    difficulty: 'Easy',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/rotation4723/1',
+    articleUrl: 'https://takeuforward.org/arrays/find-out-how-many-times-the-array-has-been-rotated/'
+  },
+  {
+    id: 'bs-11',
+    title: 'Single element in sorted array',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '1D Arrays',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/single-element-in-a-sorted-array/',
+    articleUrl: 'https://takeuforward.org/data-structure/search-single-element-in-a-sorted-array/'
+  },
+  {
+    id: 'bs-12',
+    title: 'Find square root of a number',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Search Space',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/sqrtx/',
+    articleUrl: 'https://takeuforward.org/binary-search/finding-sqrt-of-a-number-using-binary-search/'
+  },
+  {
+    id: 'bs-13',
+    title: 'Find Nth root of a number',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Search Space',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/find-nth-root-of-m5843/1',
+    articleUrl: 'https://takeuforward.org/data-structure/nth-root-of-a-number-using-binary-search/'
+  },
+  {
+    id: 'bs-14',
+    title: 'Find the smallest divisor',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Search Space',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/',
+    articleUrl: 'https://takeuforward.org/arrays/find-the-smallest-divisor-given-a-threshold/'
+  },
+  {
+    id: 'bs-15',
+    title: 'Koko eating bananas',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Search Space',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/koko-eating-bananas/',
+    articleUrl: 'https://takeuforward.org/binary-search/koko-eating-bananas/'
+  },
+  {
+    id: 'bs-16',
+    title: 'Minimum days to make M bouquets',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Search Space',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/',
+    articleUrl: 'https://takeuforward.org/arrays/minimum-days-to-make-m-bouquets/'
+  },
+  {
+    id: 'bs-17',
+    title: 'Aggressive Cows',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Search Space',
+    difficulty: 'Hard',
+    platform: 'CodingNinjas',
+    problemUrl: 'https://www.naukri.com/code360/problems/aggressive-cows_1082559',
+    articleUrl: 'https://takeuforward.org/data-structure/aggressive-cows-detailed-solution/'
+  },
+  {
+    id: 'bs-18',
+    title: 'Book Allocation Problem',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Search Space',
+    difficulty: 'Hard',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/allocate-minimum-number-of-pages0937/1',
+    articleUrl: 'https://takeuforward.org/data-structure/allocate-minimum-number-of-pages/'
+  },
+  {
+    id: 'bs-19',
+    title: 'Find peak element',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '1D Arrays',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/find-peak-element/',
+    articleUrl: 'https://takeuforward.org/data-structure/peak-element-in-array/'
+  },
+  {
+    id: 'bs-20',
+    title: 'Median of 2 sorted arrays',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Search Space',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/median-of-two-sorted-arrays/',
+    articleUrl: 'https://takeuforward.org/data-structure/median-of-two-sorted-arrays-of-different-sizes/'
+  },
+  {
+    id: 'bs-21',
+    title: 'Kth element of 2 sorted arrays',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Search Space',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/k-th-element-of-two-sorted-array1317/1',
+    articleUrl: 'https://takeuforward.org/data-structure/k-th-element-of-two-sorted-arrays/'
+  },
+  {
+    id: 'bs-22',
+    title: 'Minimize Max Distance to Gas Station',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Search Space',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/minimize-max-distance-to-gas-station/',
+    articleUrl: 'https://takeuforward.org/arrays/minimise-maximum-distance-between-gas-stations/'
+  },
+  {
+    id: 'bs-23',
+    title: 'Split array - largest sum',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: 'Search Space',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/split-array-largest-sum/',
+    articleUrl: 'https://takeuforward.org/arrays/split-array-largest-sum/'
+  },
+  {
+    id: 'bs-24',
+    title: "Find row with maximum 1's",
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '2D Arrays',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/row-with-max-1s0023/1',
+    articleUrl: 'https://takeuforward.org/arrays/find-the-row-with-maximum-number-of-1s/'
+  },
+  {
+    id: 'bs-25',
+    title: 'Search in a 2D matrix',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '2D Arrays',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/search-a-2d-matrix/',
+    articleUrl: 'https://takeuforward.org/data-structure/search-in-a-2d-matrix/'
+  },
+  {
+    id: 'bs-26',
+    title: 'Search in 2D matrix - II',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '2D Arrays',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/search-a-2d-matrix-ii/',
+    articleUrl: 'https://takeuforward.org/arrays/search-in-a-row-and-column-wise-sorted-matrix/'
+  },
+  {
+    id: 'bs-27',
+    title: 'Find Peak Element - II',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '2D Arrays',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/find-a-peak-element-ii/',
+    articleUrl: 'https://takeuforward.org/arrays/find-a-peak-element-ii/'
+  },
+  {
+    id: 'bs-28',
+    title: 'Matrix Median',
+    topicId: 'binary-search',
+    topicName: 'Binary Search',
+    subtopic: '2D Arrays',
+    difficulty: 'Hard',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/median-in-a-row-wise-sorted-matrix1527/1',
+    articleUrl: 'https://takeuforward.org/data-structure/median-of-row-wise-sorted-matrix/'
+  },
+
+  // ===================== RECURSION & BACKTRACKING (Page 2) =====================
+  {
+    id: 'rec-01',
+    title: 'Pow(x,n)',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Basics',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/powx-n/',
+    articleUrl: 'https://takeuforward.org/data-structure/implement-powxn-x-raised-to-the-power-n/'
+  },
+  {
+    id: 'rec-02',
+    title: 'Generate Parentheses',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Subsequences',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/generate-parentheses/'
+  },
+  {
+    id: 'rec-03',
+    title: 'Power Set',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Subsequences',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/subsets/',
+    articleUrl: 'https://takeuforward.org/data-structure/power-set-print-all-the-possible-subsequences-of-the-string/'
+  },
+  {
+    id: 'rec-04',
+    title: 'Check if there exists a subsequence with sum K',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Subsequences',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/check-if-there-exists-a-subsequence-with-sum-k/1'
+  },
+  {
+    id: 'rec-05',
+    title: 'Count all subsequences with sum K',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Subsequences',
+    difficulty: 'Medium',
+    platform: 'CodingNinjas',
+    problemUrl: 'https://www.naukri.com/code360/problems/count-all-subsequences-with-sum-k_758964'
+  },
+  {
+    id: 'rec-06',
+    title: 'Combination Sum',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Combinations',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/combination-sum/',
+    articleUrl: 'https://takeuforward.org/data-structure/combination-sum-1/'
+  },
+  {
+    id: 'rec-07',
+    title: 'Combination Sum II',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Combinations',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/combination-sum-ii/',
+    articleUrl: 'https://takeuforward.org/data-structure/combination-sum-ii-find-all-unique-combinations/'
+  },
+  {
+    id: 'rec-08',
+    title: 'Subsets I',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Subsets',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/subsets/',
+    articleUrl: 'https://takeuforward.org/data-structure/subset-sum-sum-of-all-subsets/'
+  },
+  {
+    id: 'rec-09',
+    title: 'Subsets II',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Subsets',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/subsets-ii/',
+    articleUrl: 'https://takeuforward.org/data-structure/subset-ii-print-all-the-unique-subsets/'
+  },
+  {
+    id: 'rec-10',
+    title: 'Combination Sum III',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Combinations',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/combination-sum-iii/'
+  },
+  {
+    id: 'rec-11',
+    title: 'Letter Combinations of a Phone Number',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Combinations',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/letter-combinations-of-a-phone-number/'
+  },
+  {
+    id: 'rec-12',
+    title: 'Palindrome partitioning',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Partitioning',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/palindrome-partitioning/',
+    articleUrl: 'https://takeuforward.org/data-structure/palindrome-partitioning/'
+  },
+  {
+    id: 'rec-13',
+    title: 'Word Search',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Backtracking',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/word-search/',
+    articleUrl: 'https://takeuforward.org/data-structure/word-search-leetcode/'
+  },
+  {
+    id: 'rec-14',
+    title: 'N Queen',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Hard Backtracking',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/n-queens/',
+    articleUrl: 'https://takeuforward.org/data-structure/n-queen-problem-return-all-distinct-solutions-to-the-n-queens-puzzle/'
+  },
+  {
+    id: 'rec-15',
+    title: 'Rat in a Maze',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Hard Backtracking',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/rat-in-a-maze-problem/1',
+    articleUrl: 'https://takeuforward.org/data-structure/rat-in-a-maze/'
+  },
+  {
+    id: 'rec-16',
+    title: 'M Coloring Problem',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Hard Backtracking',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/m-coloring-problem-1587115620/1',
+    articleUrl: 'https://takeuforward.org/data-structure/m-coloring-problem/'
+  },
+  {
+    id: 'rec-17',
+    title: 'Sudoku Solver',
+    topicId: 'recursion',
+    topicName: 'Recursion & Backtracking',
+    subtopic: 'Hard Backtracking',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/sudoku-solver/',
+    articleUrl: 'https://takeuforward.org/data-structure/sudoku-solver/'
+  },
+
+  // ===================== LINKED LIST (Page 2 & 3) =====================
+  {
+    id: 'll-01',
+    title: 'Introduction to Singly LinkedList',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Fundamentals Single LL',
+    difficulty: 'Easy',
+    platform: 'TakeUForward',
+    problemUrl: 'https://takeuforward.org/linked-list/introduction-to-linked-list/'
+  },
+  {
+    id: 'll-02',
+    title: 'Traversal in Linked List',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Fundamentals Single LL',
+    difficulty: 'Easy',
+    platform: 'TakeUForward',
+    problemUrl: 'https://takeuforward.org/linked-list/traverse-a-linked-list/'
+  },
+  {
+    id: 'll-03',
+    title: 'Deletion and Insertion in Linked List',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Fundamentals Single LL',
+    difficulty: 'Easy',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/linked-list-set-2-inserting-a-node/'
+  },
+  {
+    id: 'll-04',
+    title: 'Convert Array to Doubly Linked List',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Fundamentals DLL',
+    difficulty: 'Easy',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/introduction-to-doubly-linked-list/1'
+  },
+  {
+    id: 'll-05',
+    title: 'Add two numbers in Linked List',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Logic Building',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/add-two-numbers/',
+    articleUrl: 'https://takeuforward.org/data-structure/add-two-numbers-represented-as-linked-lists/'
+  },
+  {
+    id: 'll-06',
+    title: 'Segregate odd and even nodes in Linked List',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Logic Building',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/odd-even-linked-list/',
+    articleUrl: 'https://takeuforward.org/data-structure/segregate-even-and-odd-nodes-in-linked-list/'
+  },
+  {
+    id: 'll-07',
+    title: "Sort a Linked List of 0's 1's and 2's",
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Logic Building',
+    difficulty: 'Easy',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/given-a-linked-list-of-0s-1s-and-2s-sort-it/1'
+  },
+  {
+    id: 'll-08',
+    title: 'Remove Nth node from the back of the LL',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Logic Building',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/remove-nth-node-from-end-of-list/',
+    articleUrl: 'https://takeuforward.org/data-structure/remove-nth-node-from-back-of-linked-list/'
+  },
+  {
+    id: 'll-09',
+    title: 'Reverse a LL',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/reverse-linked-list/',
+    articleUrl: 'https://takeuforward.org/data-structure/reverse-a-linked-list/'
+  },
+  {
+    id: 'll-10',
+    title: 'Find Middle of Linked List',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/middle-of-the-linked-list/',
+    articleUrl: 'https://takeuforward.org/data-structure/find-middle-element-in-a-linked-list/'
+  },
+  {
+    id: 'll-11',
+    title: 'Check if LL is palindrome or not',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/palindrome-linked-list/',
+    articleUrl: 'https://takeuforward.org/data-structure/check-if-given-linked-list-is-palindrome/'
+  },
+  {
+    id: 'll-12',
+    title: 'Find the intersection point of Y LL',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/intersection-of-two-linked-lists/',
+    articleUrl: 'https://takeuforward.org/data-structure/find-intersection-of-two-linked-lists/'
+  },
+  {
+    id: 'll-13',
+    title: 'Detect a loop in Linked List',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/linked-list-cycle/',
+    articleUrl: 'https://takeuforward.org/data-structure/detect-a-cycle-in-a-linked-list/'
+  },
+  {
+    id: 'll-14',
+    title: 'Find the starting point in LL',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/linked-list-cycle-ii/',
+    articleUrl: 'https://takeuforward.org/data-structure/starting-point-of-loop-in-a-linked-list/'
+  },
+  {
+    id: 'll-15',
+    title: 'Reverse LL in group of given size K',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Hard',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/reverse-nodes-in-k-group/',
+    articleUrl: 'https://takeuforward.org/data-structure/reverse-linked-list-in-groups-of-size-k/'
+  },
+  {
+    id: 'll-16',
+    title: 'Rotate a Linked List',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/rotate-list/',
+    articleUrl: 'https://takeuforward.org/data-structure/rotate-a-linked-list/'
+  },
+  {
+    id: 'll-17',
+    title: 'Merge two Sorted Lists',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/merge-two-sorted-lists/',
+    articleUrl: 'https://takeuforward.org/data-structure/merge-two-sorted-linked-lists/'
+  },
+  {
+    id: 'll-18',
+    title: 'Flattening of LL',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Hard',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/flattening-a-linked-list/1',
+    articleUrl: 'https://takeuforward.org/data-structure/flattening-a-linked-list/'
+  },
+  {
+    id: 'll-19',
+    title: 'Sort LL',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/sort-list/',
+    articleUrl: 'https://takeuforward.org/data-structure/sort-a-linked-list/'
+  },
+  {
+    id: 'll-20',
+    title: 'Clone a LL with random and next pointer',
+    topicId: 'linked-list',
+    topicName: 'Linked List',
+    subtopic: 'Hard',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/copy-list-with-random-pointer/',
+    articleUrl: 'https://takeuforward.org/data-structure/clone-linked-list-with-random-and-next-pointer/'
+  },
+
+  // ===================== BIT MANIPULATION (Page 3) =====================
+  {
+    id: 'bit-01',
+    title: 'Introduction to Bits and Tricks',
+    topicId: 'bit-manipulation',
+    topicName: 'Bit Manipulation',
+    subtopic: 'Basics',
+    difficulty: 'Easy',
+    platform: 'TakeUForward',
+    problemUrl: 'https://takeuforward.org/bit-manipulation/introduction-to-bit-manipulation/'
+  },
+  {
+    id: 'bit-02',
+    title: 'Minimum Bit Flips to Convert Number',
+    topicId: 'bit-manipulation',
+    topicName: 'Bit Manipulation',
+    subtopic: 'Basics',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/minimum-bit-flips-to-convert-number/'
+  },
+  {
+    id: 'bit-03',
+    title: 'Single Number - I',
+    topicId: 'bit-manipulation',
+    topicName: 'Bit Manipulation',
+    subtopic: 'XOR Tricks',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/single-number/',
+    articleUrl: 'https://takeuforward.org/arrays/find-the-number-that-appears-once-and-the-other-numbers-twice/'
+  },
+  {
+    id: 'bit-04',
+    title: 'Single Number - II',
+    topicId: 'bit-manipulation',
+    topicName: 'Bit Manipulation',
+    subtopic: 'XOR Tricks',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/single-number-ii/'
+  },
+  {
+    id: 'bit-05',
+    title: 'Single Number - III',
+    topicId: 'bit-manipulation',
+    topicName: 'Bit Manipulation',
+    subtopic: 'XOR Tricks',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/single-number-iii/'
+  },
+  {
+    id: 'bit-06',
+    title: 'Divide two numbers without multiplication and division',
+    topicId: 'bit-manipulation',
+    topicName: 'Bit Manipulation',
+    subtopic: 'Arithmetic',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/divide-two-integers/'
+  },
+  {
+    id: 'bit-07',
+    title: 'XOR of numbers in a given range',
+    topicId: 'bit-manipulation',
+    topicName: 'Bit Manipulation',
+    subtopic: 'XOR Tricks',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/find-xor-of-numbers-from-l-to-r/1'
+  },
+
+  // ===================== GREEDY ALGORITHMS (Page 3) =====================
+  {
+    id: 'greedy-01',
+    title: 'Assign Cookies',
+    topicId: 'greedy',
+    topicName: 'Greedy Algorithms',
+    subtopic: 'Easy Greedy',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/assign-cookies/',
+    articleUrl: 'https://takeuforward.org/greedy-algorithm/assign-cookies/'
+  },
+  {
+    id: 'greedy-02',
+    title: 'Lemonade Change',
+    topicId: 'greedy',
+    topicName: 'Greedy Algorithms',
+    subtopic: 'Easy Greedy',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/lemonade-change/',
+    articleUrl: 'https://takeuforward.org/greedy-algorithm/lemonade-change/'
+  },
+  {
+    id: 'greedy-03',
+    title: 'Jump Game - I',
+    topicId: 'greedy',
+    topicName: 'Greedy Algorithms',
+    subtopic: 'Easy Greedy',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/jump-game/',
+    articleUrl: 'https://takeuforward.org/greedy-algorithm/jump-game-i/'
+  },
+  {
+    id: 'greedy-04',
+    title: 'Shortest Job First',
+    topicId: 'greedy',
+    topicName: 'Greedy Algorithms',
+    subtopic: 'Scheduling',
+    difficulty: 'Easy',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/shortest-job-first/1'
+  },
+  {
+    id: 'greedy-05',
+    title: 'Job sequencing Problem',
+    topicId: 'greedy',
+    topicName: 'Greedy Algorithms',
+    subtopic: 'Scheduling and Interval',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/job-sequencing-problem-1587115620/1',
+    articleUrl: 'https://takeuforward.org/data-structure/job-sequencing-problem/'
+  },
+  {
+    id: 'greedy-06',
+    title: 'N meetings in one room',
+    topicId: 'greedy',
+    topicName: 'Greedy Algorithms',
+    subtopic: 'Scheduling and Interval',
+    difficulty: 'Easy',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/n-meetings-in-one-room-1587115620/1',
+    articleUrl: 'https://takeuforward.org/data-structure/n-meetings-in-one-room/'
+  },
+  {
+    id: 'greedy-07',
+    title: 'Non-overlapping Intervals',
+    topicId: 'greedy',
+    topicName: 'Greedy Algorithms',
+    subtopic: 'Scheduling and Interval',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/non-overlapping-intervals/',
+    articleUrl: 'https://takeuforward.org/greedy-algorithm/non-overlapping-intervals/'
+  },
+  {
+    id: 'greedy-08',
+    title: 'Insert Interval',
+    topicId: 'greedy',
+    topicName: 'Greedy Algorithms',
+    subtopic: 'Scheduling and Interval',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/insert-interval/',
+    articleUrl: 'https://takeuforward.org/greedy-algorithm/insert-interval/'
+  },
+  {
+    id: 'greedy-09',
+    title: 'Minimum number of platforms required for a railway',
+    topicId: 'greedy',
+    topicName: 'Greedy Algorithms',
+    subtopic: 'Scheduling and Interval',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/minimum-platforms-1587115620/1',
+    articleUrl: 'https://takeuforward.org/data-structure/minimum-number-of-platforms-required-for-a-railway/'
+  },
+  {
+    id: 'greedy-10',
+    title: 'Candy',
+    topicId: 'greedy',
+    topicName: 'Greedy Algorithms',
+    subtopic: 'Hard Greedy',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/candy/',
+    articleUrl: 'https://takeuforward.org/greedy-algorithm/candy-slope-approach/'
+  },
+
+  // ===================== SLIDING WINDOW & 2 POINTERS (Page 3 & 4) =====================
+  {
+    id: 'sw-01',
+    title: 'Maximum Points You Can Obtain from Cards',
+    topicId: 'sliding-window',
+    topicName: 'Sliding Window & 2 Pointers',
+    subtopic: 'Fixed Window',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/',
+    articleUrl: 'https://takeuforward.org/sliding-window/maximum-points-you-can-obtain-from-cards/'
+  },
+  {
+    id: 'sw-02',
+    title: 'Longest Substring Without Repeating Characters',
+    topicId: 'sliding-window',
+    topicName: 'Sliding Window & 2 Pointers',
+    subtopic: 'Variable Window',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/',
+    articleUrl: 'https://takeuforward.org/data-structure/length-of-longest-substring-without-any-repeating-character/'
+  },
+  {
+    id: 'sw-03',
+    title: 'Max Consecutive Ones III',
+    topicId: 'sliding-window',
+    topicName: 'Sliding Window & 2 Pointers',
+    subtopic: 'Variable Window',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/max-consecutive-ones-iii/',
+    articleUrl: 'https://takeuforward.org/sliding-window/max-consecutive-ones-iii/'
+  },
+  {
+    id: 'sw-04',
+    title: 'Fruit Into Baskets',
+    topicId: 'sliding-window',
+    topicName: 'Sliding Window & 2 Pointers',
+    subtopic: 'Variable Window',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/fruit-into-baskets/',
+    articleUrl: 'https://takeuforward.org/sliding-window/fruit-into-baskets/'
+  },
+  {
+    id: 'sw-05',
+    title: 'Longest Substring With At Most K Distinct Characters',
+    topicId: 'sliding-window',
+    topicName: 'Sliding Window & 2 Pointers',
+    subtopic: 'Variable Window',
+    difficulty: 'Medium',
+    platform: 'CodingNinjas',
+    problemUrl: 'https://www.naukri.com/code360/problems/distinct-characters_2221410',
+    articleUrl: 'https://takeuforward.org/sliding-window/longest-substring-with-at-most-k-distinct-characters/'
+  },
+  {
+    id: 'sw-06',
+    title: 'Longest Repeating Character Replacement',
+    topicId: 'sliding-window',
+    topicName: 'Sliding Window & 2 Pointers',
+    subtopic: 'Variable Window',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/longest-repeating-character-replacement/',
+    articleUrl: 'https://takeuforward.org/sliding-window/longest-repeating-character-replacement/'
+  },
+  {
+    id: 'sw-07',
+    title: 'Minimum Window Substring',
+    topicId: 'sliding-window',
+    topicName: 'Sliding Window & 2 Pointers',
+    subtopic: 'Hard Window',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/minimum-window-substring/',
+    articleUrl: 'https://takeuforward.org/sliding-window/minimum-window-substring/'
+  },
+  {
+    id: 'sw-08',
+    title: 'Binary Subarrays With Sum',
+    topicId: 'sliding-window',
+    topicName: 'Sliding Window & 2 Pointers',
+    subtopic: 'Counting Windows',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/binary-subarrays-with-sum/',
+    articleUrl: 'https://takeuforward.org/sliding-window/binary-subarrays-with-sum/'
+  },
+  {
+    id: 'sw-09',
+    title: 'Count number of Nice subarrays',
+    topicId: 'sliding-window',
+    topicName: 'Sliding Window & 2 Pointers',
+    subtopic: 'Counting Windows',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/count-number-of-nice-subarrays/',
+    articleUrl: 'https://takeuforward.org/sliding-window/count-number-of-nice-subarrays/'
+  },
+
+  // ===================== STACKS AND QUEUES (Page 4) =====================
+  {
+    id: 'sq-01',
+    title: 'Implement Stack using Arrays',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Implementation stack & queues',
+    difficulty: 'Easy',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/implement-stack-using-array/1',
+    articleUrl: 'https://takeuforward.org/data-structure/implement-stack-using-array/'
+  },
+  {
+    id: 'sq-02',
+    title: 'Implement Queue using Arrays',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Implementation stack & queues',
+    difficulty: 'Easy',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/implement-queue-using-array/1',
+    articleUrl: 'https://takeuforward.org/data-structure/implement-queue-using-array/'
+  },
+  {
+    id: 'sq-03',
+    title: 'Implement Stack using Queue',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Implementation stack & queues',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/implement-stack-using-queues/',
+    articleUrl: 'https://takeuforward.org/data-structure/implement-stack-using-single-queue/'
+  },
+  {
+    id: 'sq-04',
+    title: 'Implement Queue using Stack',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Implementation stack & queues',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/implement-queue-using-stacks/',
+    articleUrl: 'https://takeuforward.org/data-structure/implement-queue-using-stack/'
+  },
+  {
+    id: 'sq-05',
+    title: 'Balanced Paranthesis',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Implementation stack & queues',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/valid-parentheses/',
+    articleUrl: 'https://takeuforward.org/data-structure/check-for-balanced-parentheses/'
+  },
+  {
+    id: 'sq-06',
+    title: 'Next Greater Element',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Monotonic Stack',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/next-greater-element-i/',
+    articleUrl: 'https://takeuforward.org/data-structure/next-greater-element-using-stack/'
+  },
+  {
+    id: 'sq-07',
+    title: 'Next Greater Element - 2',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Monotonic Stack',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/next-greater-element-ii/',
+    articleUrl: 'https://takeuforward.org/data-structure/next-greater-element-2/'
+  },
+  {
+    id: 'sq-08',
+    title: 'Asteroid Collision',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Monotonic Stack',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/asteroid-collision/'
+  },
+  {
+    id: 'sq-09',
+    title: 'Sum of Subarray Minimums',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Monotonic Stack',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/sum-of-subarray-minimums/',
+    articleUrl: 'https://takeuforward.org/data-structure/sum-of-subarray-minimums/'
+  },
+  {
+    id: 'sq-10',
+    title: 'Sum of Subarray Ranges',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Monotonic Stack',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/sum-of-subarray-ranges/',
+    articleUrl: 'https://takeuforward.org/data-structure/sum-of-subarray-ranges/'
+  },
+  {
+    id: 'sq-11',
+    title: 'Remove K Digits',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Monotonic Stack',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/remove-k-digits/'
+  },
+  {
+    id: 'sq-12',
+    title: 'Implement Min Stack',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'Monotonic Stack',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/min-stack/',
+    articleUrl: 'https://takeuforward.org/data-structure/implement-min-stack-o2n-and-on-space-complexity/'
+  },
+  {
+    id: 'sq-13',
+    title: 'Sliding Window Maximum',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'FAQs',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/sliding-window-maximum/',
+    articleUrl: 'https://takeuforward.org/data-structure/sliding-window-maximum/'
+  },
+  {
+    id: 'sq-14',
+    title: 'Trapping Rainwater',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'FAQs',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/trapping-rain-water/',
+    articleUrl: 'https://takeuforward.org/data-structure/trapping-rainwater/'
+  },
+  {
+    id: 'sq-15',
+    title: 'Largest rectangle in a histogram',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'FAQs',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/largest-rectangle-in-histogram/',
+    articleUrl: 'https://takeuforward.org/data-structure/area-of-largest-rectangle-in-histogram/'
+  },
+  {
+    id: 'sq-16',
+    title: 'Stock span problem',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'FAQs',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/online-stock-span/',
+    articleUrl: 'https://takeuforward.org/data-structure/stock-span-problem/'
+  },
+  {
+    id: 'sq-17',
+    title: 'LRU Cache',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'FAQs',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/lru-cache/',
+    articleUrl: 'https://takeuforward.org/data-structure/lru-cache-implementation/'
+  },
+  {
+    id: 'sq-18',
+    title: 'LFU Cache',
+    topicId: 'stacks-queues',
+    topicName: 'Stacks & Queues',
+    subtopic: 'FAQs',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/lfu-cache/',
+    articleUrl: 'https://takeuforward.org/data-structure/lfu-cache-implementation/'
+  },
+
+  // ===================== BINARY TREES (Page 4 & 5) =====================
+  {
+    id: 'bt-01',
+    title: 'Inorder Traversal',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Binary Trees Theory',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/binary-tree-inorder-traversal/',
+    articleUrl: 'https://takeuforward.org/data-structure/inorder-traversal-of-binary-tree/'
+  },
+  {
+    id: 'bt-02',
+    title: 'Preorder Traversal',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Binary Trees Theory',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/binary-tree-preorder-traversal/',
+    articleUrl: 'https://takeuforward.org/data-structure/preorder-traversal-of-binary-tree/'
+  },
+  {
+    id: 'bt-03',
+    title: 'Postorder Traversal',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Binary Trees Theory',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/binary-tree-postorder-traversal/',
+    articleUrl: 'https://takeuforward.org/data-structure/post-order-traversal-of-binary-tree/'
+  },
+  {
+    id: 'bt-04',
+    title: 'Level Order Traversal',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Binary Trees Theory',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/binary-tree-level-order-traversal/',
+    articleUrl: 'https://takeuforward.org/data-structure/level-order-traversal-of-a-binary-tree/'
+  },
+  {
+    id: 'bt-05',
+    title: 'Maximum Depth in BT',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/maximum-depth-of-binary-tree/',
+    articleUrl: 'https://takeuforward.org/data-structure/maximum-depth-of-a-binary-tree/'
+  },
+  {
+    id: 'bt-06',
+    title: 'Check if two trees are identical or not',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/same-tree/',
+    articleUrl: 'https://takeuforward.org/data-structure/check-if-two-trees-are-identical/'
+  },
+  {
+    id: 'bt-07',
+    title: 'Check for balanced binary tree',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/balanced-binary-tree/',
+    articleUrl: 'https://takeuforward.org/data-structure/check-for-balanced-binary-tree/'
+  },
+  {
+    id: 'bt-08',
+    title: 'Diameter of Binary Tree',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Medium',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/diameter-of-binary-tree/',
+    articleUrl: 'https://takeuforward.org/data-structure/calculate-the-diameter-of-a-binary-tree/'
+  },
+  {
+    id: 'bt-09',
+    title: 'Maximum path sum',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Medium',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/binary-tree-maximum-path-sum/',
+    articleUrl: 'https://takeuforward.org/data-structure/maximum-sum-path-in-binary-tree/'
+  },
+  {
+    id: 'bt-10',
+    title: 'Zig Zag or Spiral Traversal',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/',
+    articleUrl: 'https://takeuforward.org/data-structure/zig-zag-traversal-of-binary-tree/'
+  },
+  {
+    id: 'bt-11',
+    title: 'Boundary Traversal',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Medium',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1',
+    articleUrl: 'https://takeuforward.org/data-structure/boundary-traversal-of-a-binary-tree/'
+  },
+  {
+    id: 'bt-12',
+    title: 'Vertical Order Traversal',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'FAQ',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/',
+    articleUrl: 'https://takeuforward.org/data-structure/vertical-order-traversal-of-binary-tree/'
+  },
+  {
+    id: 'bt-13',
+    title: 'Top View of BT',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'FAQ',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/1',
+    articleUrl: 'https://takeuforward.org/data-structure/top-view-of-a-binary-tree/'
+  },
+  {
+    id: 'bt-14',
+    title: 'Bottom view of BT',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'FAQ',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1',
+    articleUrl: 'https://takeuforward.org/data-structure/bottom-view-of-a-binary-tree/'
+  },
+  {
+    id: 'bt-15',
+    title: 'LCA in BT',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'FAQS',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/',
+    articleUrl: 'https://takeuforward.org/data-structure/lowest-common-ancestor-for-two-given-nodes/'
+  },
+  {
+    id: 'bt-16',
+    title: 'Construct a BT from Preorder and Inorder',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Construction Problems',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/',
+    articleUrl: 'https://takeuforward.org/data-structure/construct-a-binary-tree-from-inorder-and-preorder-traversal/'
+  },
+  {
+    id: 'bt-17',
+    title: 'Serialize and De-serialize BT',
+    topicId: 'binary-trees',
+    topicName: 'Binary Trees',
+    subtopic: 'Construction Problems',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/serialize-and-deserialize-binary-tree/',
+    articleUrl: 'https://takeuforward.org/data-structure/serialize-and-deserialize-a-binary-tree/'
+  },
+
+  // ===================== BINARY SEARCH TREES (Page 5) =====================
+  {
+    id: 'bst-01',
+    title: 'Introduction to BST',
+    topicId: 'bst',
+    topicName: 'Binary Search Trees',
+    subtopic: 'Theory & Basics',
+    difficulty: 'Easy',
+    platform: 'TakeUForward',
+    problemUrl: 'https://takeuforward.org/binary-search-tree/introduction-to-binary-search-tree/'
+  },
+  {
+    id: 'bst-02',
+    title: 'Search in BST',
+    topicId: 'bst',
+    topicName: 'Binary Search Trees',
+    subtopic: 'Theory & Basics',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/search-in-a-binary-search-tree/',
+    articleUrl: 'https://takeuforward.org/data-structure/search-in-a-binary-search-tree-bst/'
+  },
+  {
+    id: 'bst-03',
+    title: 'Insert a given node in BST',
+    topicId: 'bst',
+    topicName: 'Binary Search Trees',
+    subtopic: 'Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/insert-into-a-binary-search-tree/'
+  },
+  {
+    id: 'bst-04',
+    title: 'Delete a node in BST',
+    topicId: 'bst',
+    topicName: 'Binary Search Trees',
+    subtopic: 'Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/delete-node-in-a-bst/',
+    articleUrl: 'https://takeuforward.org/data-structure/delete-a-node-in-binary-search-tree-bst/'
+  },
+  {
+    id: 'bst-05',
+    title: 'Check if a tree is a BST or not',
+    topicId: 'bst',
+    topicName: 'Binary Search Trees',
+    subtopic: 'Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/validate-binary-search-tree/',
+    articleUrl: 'https://takeuforward.org/data-structure/check-if-a-tree-is-a-bst-or-bt-solve-with-code/'
+  },
+  {
+    id: 'bst-06',
+    title: 'LCA in BST',
+    topicId: 'bst',
+    topicName: 'Binary Search Trees',
+    subtopic: 'Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/',
+    articleUrl: 'https://takeuforward.org/data-structure/lca-in-binary-search-tree-bst/'
+  },
+  {
+    id: 'bst-07',
+    title: 'Construct a BST from a preorder traversal',
+    topicId: 'bst',
+    topicName: 'Binary Search Trees',
+    subtopic: 'Medium',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/',
+    articleUrl: 'https://takeuforward.org/data-structure/construct-a-bst-from-a-preorder-traversal/'
+  },
+  {
+    id: 'bst-08',
+    title: 'BST iterator',
+    topicId: 'bst',
+    topicName: 'Binary Search Trees',
+    subtopic: 'FAQs',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/binary-search-tree-iterator/',
+    articleUrl: 'https://takeuforward.org/data-structure/bst-iterator/'
+  },
+  {
+    id: 'bst-09',
+    title: 'Two sum in BST',
+    topicId: 'bst',
+    topicName: 'Binary Search Trees',
+    subtopic: 'FAQs',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/two-sum-iv-input-is-a-bst/',
+    articleUrl: 'https://takeuforward.org/data-structure/two-sum-in-bst/'
+  },
+  {
+    id: 'bst-10',
+    title: 'Largest BST in Binary Tree',
+    topicId: 'bst',
+    topicName: 'Binary Search Trees',
+    subtopic: 'FAQs',
+    difficulty: 'Hard',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/largest-bst/1',
+    articleUrl: 'https://takeuforward.org/data-structure/maximum-sum-bst-in-binary-tree/'
+  },
+
+  // ===================== HEAPS (Page 5) =====================
+  {
+    id: 'hp-01',
+    title: 'Heapify Algorithm',
+    topicId: 'heaps',
+    topicName: 'Heaps & Priority Queues',
+    subtopic: 'Theory and Implementation',
+    difficulty: 'Medium',
+    platform: 'TakeUForward',
+    problemUrl: 'https://takeuforward.org/heaps/heapify-algorithm/'
+  },
+  {
+    id: 'hp-02',
+    title: 'Implement Min Heap',
+    topicId: 'heaps',
+    topicName: 'Heaps & Priority Queues',
+    subtopic: 'Theory and Implementation',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/binary-heap/'
+  },
+  {
+    id: 'hp-03',
+    title: 'Convert Min Heap to Max Heap',
+    topicId: 'heaps',
+    topicName: 'Heaps & Priority Queues',
+    subtopic: 'Theory and Implementation',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/convert-min-heap-to-max-heap/1'
+  },
+  {
+    id: 'hp-04',
+    title: 'Heap Sort',
+    topicId: 'heaps',
+    topicName: 'Heaps & Priority Queues',
+    subtopic: 'Theory and Implementation',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/heap-sort/1'
+  },
+  {
+    id: 'hp-05',
+    title: 'K-th Largest element in an array',
+    topicId: 'heaps',
+    topicName: 'Heaps & Priority Queues',
+    subtopic: 'Theory and Implementation',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/kth-largest-element-in-an-array/',
+    articleUrl: 'https://takeuforward.org/data-structure/kth-largest-smallest-element-in-an-array/'
+  },
+  {
+    id: 'hp-06',
+    title: 'Kth largest element in a stream of running integers',
+    topicId: 'heaps',
+    topicName: 'Heaps & Priority Queues',
+    subtopic: 'FAQs',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/kth-largest-element-in-a-stream/'
+  },
+
+  // ===================== GRAPHS (Page 6) =====================
+  {
+    id: 'gr-01',
+    title: 'Number of provinces',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Traversal Problems',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/number-of-provinces/',
+    articleUrl: 'https://takeuforward.org/data-structure/number-of-provinces/'
+  },
+  {
+    id: 'gr-02',
+    title: 'Number of islands',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Traversal Problems',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/number-of-islands/',
+    articleUrl: 'https://takeuforward.org/data-structure/number-of-islands/'
+  },
+  {
+    id: 'gr-03',
+    title: 'Flood fill algorithm',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Traversal Problems',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/flood-fill/',
+    articleUrl: 'https://takeuforward.org/data-structure/flood-fill-algorithm/'
+  },
+  {
+    id: 'gr-04',
+    title: 'Rotten Oranges',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Traversal Problems',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/rotting-oranges/',
+    articleUrl: 'https://takeuforward.org/data-structure/rotton-oranges-min-time-to-rot-all-oranges-bfs/'
+  },
+  {
+    id: 'gr-05',
+    title: 'Distance of nearest cell having one',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Traversal Problems',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/01-matrix/',
+    articleUrl: 'https://takeuforward.org/data-structure/distance-of-nearest-cell-having-1/'
+  },
+  {
+    id: 'gr-06',
+    title: 'Surrounded Regions',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Traversal Problems',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/surrounded-regions/',
+    articleUrl: 'https://takeuforward.org/data-structure/surrounded-regions-replace-os-with-xs/'
+  },
+  {
+    id: 'gr-07',
+    title: 'Detect a cycle in an undirected graph',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Cycles',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1',
+    articleUrl: 'https://takeuforward.org/data-structure/detect-cycle-in-an-undirected-graph-using-bfs/'
+  },
+  {
+    id: 'gr-08',
+    title: 'Bipartite graph',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Cycles',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/is-graph-bipartite/',
+    articleUrl: 'https://takeuforward.org/data-structure/bipartite-graph-bfs-implementation/'
+  },
+  {
+    id: 'gr-09',
+    title: "Topological sort or Kahn's algorithm",
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Cycles',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/topological-sort/1',
+    articleUrl: 'https://takeuforward.org/data-structure/topological-sort-bfs/'
+  },
+  {
+    id: 'gr-10',
+    title: 'Detect a cycle in a directed graph',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Cycles',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1',
+    articleUrl: 'https://takeuforward.org/data-structure/detect-a-cycle-in-directed-graph-using-bfs/'
+  },
+  {
+    id: 'gr-11',
+    title: 'Course Schedule I',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Hard Problems',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/course-schedule/',
+    articleUrl: 'https://takeuforward.org/data-structure/course-schedule-i-and-ii-pre-requisite-tasks-topological-sort/'
+  },
+  {
+    id: 'gr-12',
+    title: 'Course Schedule II',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Hard Problems',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/course-schedule-ii/',
+    articleUrl: 'https://takeuforward.org/data-structure/course-schedule-i-and-ii-pre-requisite-tasks-topological-sort/'
+  },
+  {
+    id: 'gr-13',
+    title: 'Alien Dictionary',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Hard Problems',
+    difficulty: 'Hard',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/alien-dictionary/1',
+    articleUrl: 'https://takeuforward.org/data-structure/alien-dictionary-topological-sort/'
+  },
+  {
+    id: 'gr-14',
+    title: "Dijkstra's algorithm",
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Shortest Path Algorithms',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/implementing-dijkstra-set-1-adjacency-matrix/1',
+    articleUrl: 'https://takeuforward.org/data-structure/dijkstras-algorithm-using-priority-queue-g-32/'
+  },
+  {
+    id: 'gr-15',
+    title: 'Path with minimum effort',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Shortest Path Algorithms',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/path-with-minimum-effort/',
+    articleUrl: 'https://takeuforward.org/data-structure/g-37-path-with-minimum-effort/'
+  },
+  {
+    id: 'gr-16',
+    title: 'Cheapest flight within K stops',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Shortest Path Algorithms',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/cheapest-flights-within-k-stops/',
+    articleUrl: 'https://takeuforward.org/data-structure/g-38-cheapest-flights-within-k-stops/'
+  },
+  {
+    id: 'gr-17',
+    title: 'Bellman ford algorithm',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Shortest Path Algorithms',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/distance-from-the-source-bellman-ford-algorithm/1',
+    articleUrl: 'https://takeuforward.org/data-structure/bellman-ford-algorithm-g-41/'
+  },
+  {
+    id: 'gr-18',
+    title: 'Floyd warshall algorithm',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Shortest Path Algorithms',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/implementing-floyd-warshall2042/1',
+    articleUrl: 'https://takeuforward.org/data-structure/floyd-warshall-algorithm-g-42/'
+  },
+  {
+    id: 'gr-19',
+    title: 'Disjoint Set',
+    topicId: 'graphs',
+    topicName: 'Graphs',
+    subtopic: 'Minimum Spanning Tree',
+    difficulty: 'Medium',
+    platform: 'TakeUForward',
+    problemUrl: 'https://takeuforward.org/data-structure/disjoint-set-union-by-rank-union-by-size-path-compression-g-46/'
+  },
+
+  // ===================== DYNAMIC PROGRAMMING (Page 7 & 8) =====================
+  {
+    id: 'dp-01',
+    title: 'Climbing stairs',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: '1D DP',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/climbing-stairs/',
+    articleUrl: 'https://takeuforward.org/data-structure/dynamic-programming-climbing-stairs/'
+  },
+  {
+    id: 'dp-02',
+    title: 'Frog Jump',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: '1D DP',
+    difficulty: 'Medium',
+    platform: 'CodingNinjas',
+    problemUrl: 'https://www.naukri.com/code360/problems/frog-jump_3621012',
+    articleUrl: 'https://takeuforward.org/data-structure/dynamic-programming-frog-jump-dp-3/'
+  },
+  {
+    id: 'dp-03',
+    title: 'Maximum sum of non adjacent elements',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: '1D DP',
+    difficulty: 'Medium',
+    platform: 'CodingNinjas',
+    problemUrl: 'https://www.naukri.com/code360/problems/maximum-sum-of-non-adjacent-elements_843261',
+    articleUrl: 'https://takeuforward.org/data-structure/maximum-sum-of-non-adjacent-elements-dp-5/'
+  },
+  {
+    id: 'dp-04',
+    title: 'House robber',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: '1D DP',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/house-robber/',
+    articleUrl: 'https://takeuforward.org/data-structure/dynamic-programming-house-robber-dp-6/'
+  },
+  {
+    id: 'dp-05',
+    title: "Ninja's training",
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: '2D DP',
+    difficulty: 'Medium',
+    platform: 'CodingNinjas',
+    problemUrl: 'https://www.naukri.com/code360/problems/ninja-s-training_3621003',
+    articleUrl: 'https://takeuforward.org/data-structure/dynamic-programming-ninjas-training-dp-7/'
+  },
+  {
+    id: 'dp-06',
+    title: 'Grid unique paths',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'DP on Grids',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/unique-paths/',
+    articleUrl: 'https://takeuforward.org/data-structure/grid-unique-paths-dp-on-grids-dp8/'
+  },
+  {
+    id: 'dp-07',
+    title: 'Unique paths II',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'DP on Grids',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/unique-paths-ii/',
+    articleUrl: 'https://takeuforward.org/data-structure/grid-unique-paths-2-dp-9/'
+  },
+  {
+    id: 'dp-08',
+    title: 'Minimum Falling Path Sum',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'DP on Grids',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/minimum-falling-path-sum/',
+    articleUrl: 'https://takeuforward.org/data-structure/minimum-maximum-falling-path-sum-dp-12/'
+  },
+  {
+    id: 'dp-09',
+    title: 'Best time to buy and sell stock',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'DP on Stocks',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/',
+    articleUrl: 'https://takeuforward.org/data-structure/stock-buy-and-sell/'
+  },
+  {
+    id: 'dp-10',
+    title: 'Best time to buy and sell stock II',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'DP on Stocks',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/',
+    articleUrl: 'https://takeuforward.org/data-structure/buy-and-sell-stock-ii-dp-36/'
+  },
+  {
+    id: 'dp-11',
+    title: 'Subset sum equals to target',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'DP on Subsequences',
+    difficulty: 'Medium',
+    platform: 'CodingNinjas',
+    problemUrl: 'https://www.naukri.com/code360/problems/subset-sum-equal-to-k_1550954',
+    articleUrl: 'https://takeuforward.org/data-structure/subset-sum-equal-to-target-dp-14/'
+  },
+  {
+    id: 'dp-12',
+    title: '0 and 1 Knapsack',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'DP on Subsequences',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1',
+    articleUrl: 'https://takeuforward.org/data-structure/0-1-knapsack-dp-19/'
+  },
+  {
+    id: 'dp-13',
+    title: 'Coin change II',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'DP on Subsequences',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/coin-change-ii/',
+    articleUrl: 'https://takeuforward.org/data-structure/coin-change-2-dp-22/'
+  },
+  {
+    id: 'dp-14',
+    title: 'Longest Increasing Subsequence',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'LIS',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/longest-increasing-subsequence/',
+    articleUrl: 'https://takeuforward.org/data-structure/longest-increasing-subsequence-dp-41/'
+  },
+  {
+    id: 'dp-15',
+    title: 'Longest common subsequence',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'DP on Strings',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/longest-common-subsequence/',
+    articleUrl: 'https://takeuforward.org/data-structure/longest-common-subsequence-dp-25/'
+  },
+  {
+    id: 'dp-16',
+    title: 'Edit distance',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'DP on Strings',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/edit-distance/',
+    articleUrl: 'https://takeuforward.org/data-structure/edit-distance-dp-33/'
+  },
+  {
+    id: 'dp-17',
+    title: 'Matrix chain multiplication',
+    topicId: 'dp',
+    topicName: 'Dynamic Programming',
+    subtopic: 'MCM DP',
+    difficulty: 'Hard',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1',
+    articleUrl: 'https://takeuforward.org/data-structure/matrix-chain-multiplication-dp-48/'
+  },
+
+  // ===================== TRIES (Page 8) =====================
+  {
+    id: 'trie-01',
+    title: 'Trie Implementation and Operations',
+    topicId: 'tries',
+    topicName: 'Tries',
+    subtopic: 'Theory',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/implement-trie-prefix-tree/',
+    articleUrl: 'https://takeuforward.org/data-structure/implement-trie-1/'
+  },
+  {
+    id: 'trie-02',
+    title: 'Longest Word with All Prefixes',
+    topicId: 'tries',
+    topicName: 'Tries',
+    subtopic: 'Problems',
+    difficulty: 'Medium',
+    platform: 'CodingNinjas',
+    problemUrl: 'https://www.naukri.com/code360/problems/complete-string_2687860',
+    articleUrl: 'https://takeuforward.org/data-structure/longest-word-with-all-prefixes/'
+  },
+  {
+    id: 'trie-03',
+    title: 'Maximum XOR of two numbers in an array',
+    topicId: 'tries',
+    topicName: 'Tries',
+    subtopic: 'Problems',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/',
+    articleUrl: 'https://takeuforward.org/data-structure/maximum-xor-of-two-numbers-in-an-array/'
+  },
+
+  // ===================== ADVANCED STRINGS (Page 8) =====================
+  {
+    id: 'str-01',
+    title: 'Reverse every word in a string',
+    topicId: 'strings-advance',
+    topicName: 'Advanced Strings',
+    subtopic: 'Medium Problems',
+    difficulty: 'Medium',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/reverse-words-in-a-string/',
+    articleUrl: 'https://takeuforward.org/data-structure/reverse-words-in-a-string/'
+  },
+  {
+    id: 'str-02',
+    title: 'Rabin Karp Algorithm',
+    topicId: 'strings-advance',
+    topicName: 'Advanced Strings',
+    subtopic: 'Pattern Matching',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/repeated-string-match/'
+  },
+  {
+    id: 'str-03',
+    title: 'Z function',
+    topicId: 'strings-advance',
+    topicName: 'Advanced Strings',
+    subtopic: 'Pattern Matching',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/'
+  },
+  {
+    id: 'str-04',
+    title: 'KMP Algorithm or LPS array',
+    topicId: 'strings-advance',
+    topicName: 'Advanced Strings',
+    subtopic: 'Pattern Matching',
+    difficulty: 'Hard',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/longest-prefix-suffix2527/1'
+  },
+  {
+    id: 'str-05',
+    title: 'Shortest Palindrome',
+    topicId: 'strings-advance',
+    topicName: 'Advanced Strings',
+    subtopic: 'Pattern Matching',
+    difficulty: 'Hard',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/shortest-palindrome/'
+  },
+
+  // ===================== MATHEMATICS (Page 8) =====================
+  {
+    id: 'math-01',
+    title: 'Print all primes till N',
+    topicId: 'maths',
+    topicName: 'Mathematics & Number Theory',
+    subtopic: 'Sieve of Eratosthenes',
+    difficulty: 'Easy',
+    platform: 'LeetCode',
+    problemUrl: 'https://leetcode.com/problems/count-primes/',
+    articleUrl: 'https://takeuforward.org/data-structure/sieve-of-eratosthenes-print-all-primes-till-n/'
+  },
+  {
+    id: 'math-02',
+    title: 'Prime factorisation of a Number',
+    topicId: 'maths',
+    topicName: 'Mathematics & Number Theory',
+    subtopic: 'Sieve of Eratosthenes',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/prime-factors5052/1'
+  },
+  {
+    id: 'math-03',
+    title: 'Count primes in range L to R',
+    topicId: 'maths',
+    topicName: 'Mathematics & Number Theory',
+    subtopic: 'Sieve of Eratosthenes',
+    difficulty: 'Medium',
+    platform: 'GeeksforGeeks',
+    problemUrl: 'https://www.geeksforgeeks.org/problems/count-primes-in-range1604/1'
+  }
+];
+
+export function getQuestionsByTopic(topicId: string): Question[] {
+  return QUESTIONS.filter((q) => q.topicId === topicId);
+}
+
+export function getTopicById(topicId: string): Topic | undefined {
+  return TOPICS.find((t) => t.id === topicId);
+}
