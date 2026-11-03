@@ -1,10 +1,11 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
-import { QUESTIONS, TOPICS } from '../data/questionsData';
+import { getAllQuestions, getLiveSheets, TOPICS } from '../services/questionBank';
 import {
   calculateStreaks,
   completeRevision as storageCompleteRevision,
   exportUserDataCSV,
   exportUserDataJSON,
+  forcePushToCloud,
   getDailyActivityMap,
   getLocalDateString,
   getStoredBookmarks,
@@ -12,13 +13,17 @@ import {
   getStoredRevisions,
   getUserSettings,
   importUserDataJSON,
+  isCloudSyncInProgress,
+  refreshFromCloud,
   saveQuestionNotes as storageSaveNotes,
   scheduleManualRevision,
+  setCurrentUser,
   subscribeToStorage,
   toggleBookmark as storageToggleBookmark,
   updateQuestionStatus as storageUpdateStatus,
   updateUserSettings as storageUpdateSettings,
 } from '../services/storage';
+import { useAuth } from './useAuth';
 import type { QuestionStatus, UserSettings } from '../types';
 
 export function useCodeTrack() {
@@ -27,6 +32,9 @@ export function useCodeTrack() {
   const [revisions, setRevisions] = useState(getStoredRevisions);
   const [activityMap, setActivityMap] = useState(getDailyActivityMap);
   const [settings, setSettings] = useState(getUserSettings);
+  const [questions, setQuestions] = useState(getAllQuestions);
+
+  const { user } = useAuth();
 
   const refreshState = useCallback(() => {
     setProgress(getStoredProgress());
@@ -34,7 +42,12 @@ export function useCodeTrack() {
     setRevisions(getStoredRevisions());
     setActivityMap(getDailyActivityMap());
     setSettings(getUserSettings());
+    setQuestions(getAllQuestions());
   }, []);
+
+  useEffect(() => {
+    setCurrentUser(user?.id ?? null);
+  }, [user?.id]);
 
   useEffect(() => {
     const unsubscribe = subscribeToStorage(refreshState);
@@ -43,7 +56,7 @@ export function useCodeTrack() {
 
   // Derived Analytics and Statistics
   const stats = useMemo(() => {
-    const totalQuestions = QUESTIONS.length;
+    const totalQuestions = questions.length;
     let solvedCount = 0;
     let attemptedCount = 0;
 
@@ -53,7 +66,8 @@ export function useCodeTrack() {
     });
 
     const unsolvedCount = Math.max(0, totalQuestions - solvedCount - attemptedCount);
-    const completionPercentage = totalQuestions > 0 ? Math.round((solvedCount / totalQuestions) * 100) : 0;
+    const completionPercentage =
+      totalQuestions > 0 ? Math.round((solvedCount / totalQuestions) * 100) : 0;
 
     const todayStr = getLocalDateString();
     const todayActivity = activityMap[todayStr];
@@ -81,18 +95,18 @@ export function useCodeTrack() {
       unsolvedCount,
       completionPercentage,
       todaySolvedCount,
-      dailyGoal: settings.dailyGoal,
+      dailyGoal: settings.dailyGoal || 3,
       currentStreak,
       longestStreak,
       dueTodayRevisionsCount,
       overdueRevisionsCount,
     };
-  }, [progress, activityMap, settings.dailyGoal, revisions]);
+  }, [questions, progress, activityMap, settings.dailyGoal, revisions]);
 
   // Topic-wise progress breakdown
   const topicStats = useMemo(() => {
     return TOPICS.map((topic) => {
-      const topicQuestions = QUESTIONS.filter((q) => q.topicId === topic.id);
+      const topicQuestions = questions.filter((q) => q.topicId === topic.id);
       const total = topicQuestions.length;
       let solved = 0;
       let attempted = 0;
@@ -115,7 +129,12 @@ export function useCodeTrack() {
         percentage,
       };
     });
-  }, [progress]);
+  }, [questions, progress]);
+
+  // Live Sheet breakdown with real counts and percentages
+  const sheetStats = useMemo(() => {
+    return getLiveSheets(questions, progress);
+  }, [questions, progress]);
 
   // User Actions
   const updateStatus = useCallback((questionId: string, status: QuestionStatus) => {
@@ -143,22 +162,37 @@ export function useCodeTrack() {
     setSettings(updated);
   }, []);
 
+  const updateDailyGoal = useCallback(
+    (newGoal: number) => {
+      const valid = Math.max(1, Math.min(100, Math.round(newGoal)));
+      updateSettings({ dailyGoal: valid });
+    },
+    [updateSettings]
+  );
+
   return {
     progress,
     bookmarks,
     revisions,
     activityMap,
     settings,
+    questions,
     stats,
     topicStats,
+    sheetStats,
     updateStatus,
     saveNotes,
     toggleBookmark,
     scheduleRevision,
     completeRevision,
     updateSettings,
+    updateDailyGoal,
     exportJSON: exportUserDataJSON,
     exportCSV: exportUserDataCSV,
     importJSON: importUserDataJSON,
+    isSyncing: isCloudSyncInProgress(),
+    forceSync: () =>
+      user?.id ? forcePushToCloud(user.id) : Promise.resolve({ success: false, count: 0 }),
+    refreshFromCloud: () => (user?.id ? refreshFromCloud(user.id) : Promise.resolve(false)),
   };
 }

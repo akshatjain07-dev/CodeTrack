@@ -15,6 +15,18 @@ export interface Question {
   problemUrl: string;
   articleUrl?: string;
   youtubeUrl?: string;
+  sheets?: string[]; // Collection membership e.g. ['striver-a2z', 'neetcode-150', 'neetcode-250']
+}
+
+export interface ImportSummary {
+  sheetId: string;
+  sheetName: string;
+  totalProcessed: number;
+  newlyImported: number;
+  matchedExisting: number;
+  skipped: number;
+  rejected: number;
+  errors: string[];
 }
 
 export interface Topic {
@@ -57,8 +69,9 @@ export interface DailyActivityRecord {
 export interface UserSettings {
   dailyGoal: number;
   preferredLanguage: string;
-  theme: 'dark' | 'light';
+  theme: 'dark' | 'light' | 'system';
   profileName?: string;
+
   leetcodeUsername?: string;
   codeforcesUsername?: string;
 }

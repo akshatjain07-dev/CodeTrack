@@ -9,7 +9,6 @@ import {
   Zap,
 } from 'lucide-react';
 import { useCodeTrack } from '../hooks/useCodeTrack';
-import { QUESTIONS } from '../data/questionsData';
 import type { Question, RevisionItem } from '../types';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
@@ -18,7 +17,7 @@ import { getLocalDateString } from '../services/storage';
 
 export const RevisionCenterPage: React.FC = () => {
   const { openDrawer } = useOutletContext<{ openDrawer: (q: Question) => void }>();
-  const { revisions, completeRevision } = useCodeTrack();
+  const { revisions, completeRevision, questions } = useCodeTrack();
 
   const [activeTab, setActiveTab] = useState<'due' | 'overdue' | 'upcoming' | 'completed'>('due');
   const [selectedRevisionQuestion, setSelectedRevisionQuestion] = useState<Question | null>(null);
@@ -33,7 +32,7 @@ export const RevisionCenterPage: React.FC = () => {
     const completed: { question: Question; revision: RevisionItem }[] = [];
 
     Object.values(revisions).forEach((r) => {
-      const q = QUESTIONS.find((item) => item.id === r.questionId);
+      const q = questions.find((item) => item.id === r.questionId);
       if (!q) return;
 
       if (r.isCompleted) {
@@ -48,7 +47,7 @@ export const RevisionCenterPage: React.FC = () => {
     });
 
     return { due, overdue, upcoming, completed };
-  }, [revisions, todayStr]);
+  }, [revisions, todayStr, questions]);
 
   const activeList =
     activeTab === 'due'
@@ -62,177 +61,163 @@ export const RevisionCenterPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-zinc-800/60">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-subtle">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold">
+            <span className="text-xs font-mono uppercase tracking-wider text-muted font-medium">
               Spaced Repetition System
             </span>
-            <span className="text-zinc-600">·</span>
-            <span className="text-xs text-zinc-500 font-mono">
+            <span className="text-muted">·</span>
+            <span className="text-xs text-muted font-mono">
               Stage 1 (1d) → Stage 2 (3d) → Stage 3 (7d) → Stage 4 (14d) → Stage 5 (Mastered)
             </span>
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-white">Revision Center</h1>
-          <p className="text-xs text-zinc-400 mt-0.5">
+          <h1 className="text-2xl font-semibold tracking-tight text-primary">Revision Center</h1>
+          <p className="text-xs text-secondary mt-0.5">
             Systematically review previously solved DSA problems to build permanent neural retention.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-mono px-3 py-1.5 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">
-            {categorized.due.length + categorized.overdue.length} Action Items Pending
+          <span className="text-xs font-mono px-3 py-1.5 rounded-md bg-surface border border-subtle text-primary">
+            {categorized.due.length + categorized.overdue.length} Items Requiring Review
           </span>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-zinc-800/80 pb-2 overflow-x-auto">
+      <div className="flex items-center gap-2 border-b border-subtle pb-2 overflow-x-auto">
         <button
           onClick={() => setActiveTab('due')}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer ${
             activeTab === 'due'
-              ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold'
-              : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/40'
+              ? 'bg-surface-elevated text-primary border border-default font-semibold shadow-xs'
+              : 'text-secondary hover:text-primary hover:bg-surface-subtle'
           }`}
         >
-          <Clock className="w-3.5 h-3.5 text-amber-400" />
+          <Clock className="w-3.5 h-3.5" />
           <span>Due Today</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-zinc-800 text-[10px] font-mono">
+          <span className="px-1.5 py-0.2 rounded-full bg-surface-subtle text-primary text-[10px] font-mono border border-subtle">
             {categorized.due.length}
           </span>
         </button>
 
         <button
           onClick={() => setActiveTab('overdue')}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer ${
             activeTab === 'overdue'
-              ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40 font-semibold'
-              : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/40'
+              ? 'bg-surface-elevated text-primary border border-default font-semibold shadow-xs'
+              : 'text-secondary hover:text-primary hover:bg-surface-subtle'
           }`}
         >
-          <AlertCircle className="w-3.5 h-3.5 text-rose-400" />
+          <AlertCircle className="w-3.5 h-3.5" />
           <span>Overdue</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-zinc-800 text-[10px] font-mono">
+          <span className="px-1.5 py-0.2 rounded-full bg-surface-subtle text-primary text-[10px] font-mono border border-subtle">
             {categorized.overdue.length}
           </span>
         </button>
 
         <button
           onClick={() => setActiveTab('upcoming')}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer ${
             activeTab === 'upcoming'
-              ? 'bg-sky-500/20 text-sky-300 border border-sky-500/40 font-semibold'
-              : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/40'
+              ? 'bg-surface-elevated text-primary border border-default font-semibold shadow-xs'
+              : 'text-secondary hover:text-primary hover:bg-surface-subtle'
           }`}
         >
-          <Calendar className="w-3.5 h-3.5 text-sky-400" />
-          <span>Upcoming Schedule</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-zinc-800 text-[10px] font-mono">
+          <Calendar className="w-3.5 h-3.5" />
+          <span>Upcoming Revisions</span>
+          <span className="px-1.5 py-0.2 rounded-full bg-surface-subtle text-secondary text-[10px] font-mono border border-subtle">
             {categorized.upcoming.length}
           </span>
         </button>
 
         <button
           onClick={() => setActiveTab('completed')}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer ${
             activeTab === 'completed'
-              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-semibold'
-              : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/40'
+              ? 'bg-surface-elevated text-primary border border-default font-semibold shadow-xs'
+              : 'text-secondary hover:text-primary hover:bg-surface-subtle'
           }`}
         >
-          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Mastered</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-zinc-800 text-[10px] font-mono">
+          <CheckCircle2 className="w-3.5 h-3.5" />
+          <span>Mastered & Graduated</span>
+          <span className="px-1.5 py-0.2 rounded-full bg-surface-subtle text-secondary text-[10px] font-mono border border-subtle">
             {categorized.completed.length}
           </span>
         </button>
       </div>
 
-      {/* List */}
+      {/* Revision List */}
       {activeList.length === 0 ? (
-        <div className="p-12 text-center border border-zinc-800 rounded-lg bg-zinc-900/30 space-y-2">
-          <div className="w-10 h-10 rounded-full bg-zinc-800/80 flex items-center justify-center mx-auto text-zinc-500 mb-2">
-            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-          </div>
-          <h3 className="text-sm font-semibold text-zinc-200">
-            {activeTab === 'due'
-              ? 'All caught up for today!'
-              : activeTab === 'overdue'
-              ? 'No overdue revisions!'
-              : activeTab === 'upcoming'
-              ? 'No upcoming revisions scheduled'
-              : 'No problems graduated to Mastered yet'}
-          </h3>
-          <p className="text-xs text-zinc-500 max-w-sm mx-auto">
-            {activeTab === 'due'
-              ? 'Great job keeping up with your intervals. Solving new questions automatically schedules their next revision.'
-              : 'Solve more problems from the question bank to start their spaced repetition pipeline.'}
+        <div className="p-12 text-center border border-subtle rounded-lg bg-surface-elevated space-y-2 animate-fade-in">
+          <CheckCircle2 className="w-8 h-8 text-secondary mx-auto mb-2" />
+          <h3 className="text-sm font-semibold text-primary">No revisions in this category</h3>
+          <p className="text-xs text-secondary max-w-sm mx-auto">
+            {activeTab === 'due' || activeTab === 'overdue'
+              ? "You are completely caught up! Solve new questions or schedule revisions from the Question Drawer."
+              : 'Items scheduled for spaced repetition will populate here.'}
           </p>
         </div>
       ) : (
-        <div className="divide-y divide-zinc-800/70 border border-zinc-800 rounded-lg overflow-hidden bg-zinc-900/40">
-          {activeList.map(({ question: q, revision: r }) => (
+        <div key={activeTab} className="divide-y divide-subtle border border-subtle rounded-md overflow-hidden bg-surface-elevated">
+          {activeList.map(({ question: q, revision: r }, idx) => (
             <div
               key={q.id}
-              className="flex flex-col sm:flex-row sm:items-center justify-between p-4 hover:bg-zinc-800/30 transition-colors gap-3"
+              style={{ animationDelay: `${Math.min(idx * 40, 240)}ms` }}
+              className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-surface-subtle transition-colors duration-150 animate-fade-in"
             >
-              <div className="flex items-start sm:items-center gap-3 min-w-0">
-                <div className="p-2 rounded bg-zinc-800 text-zinc-400 border border-zinc-700/60 font-mono text-xs font-semibold shrink-0">
-                  S{r.stage}
+              <div className="space-y-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono text-muted">{q.id}</span>
+                  <Badge variant="difficulty" difficulty={q.difficulty} />
+                  <Badge variant="platform" platform={q.platform} />
+                  <span className="text-[11px] font-mono px-2 py-0.2 rounded bg-surface border border-subtle text-secondary">
+                    Stage {r.stage}/5
+                  </span>
                 </div>
-
-                <div className="min-w-0">
-                  <button
-                    onClick={() => openDrawer(q)}
-                    className="text-sm font-medium text-zinc-200 hover:text-white transition-colors truncate block text-left"
-                  >
-                    {q.title}
-                  </button>
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-zinc-500 mt-0.5">
-                    <span className="font-mono text-zinc-400">{q.topicName}</span>
-                    <span>·</span>
-                    <Badge variant="difficulty" difficulty={q.difficulty} />
-                    <span>·</span>
-                    <span className="font-mono text-zinc-400">
-                      Scheduled: {r.nextReviewDate}
-                    </span>
-                    <span>·</span>
-                    <span>Revised {r.reviewCount} times</span>
-                  </div>
+                <h4 className="text-sm font-semibold text-primary truncate">{q.title}</h4>
+                <div className="flex items-center gap-3 text-xs text-secondary font-mono">
+                  <span>Topic: {q.topicName}</span>
+                  <span>·</span>
+                  <span>Scheduled: {r.nextReviewDate}</span>
+                  <span>·</span>
+                  <span>Reviewed: {r.reviewCount} times</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+              <div className="flex items-center gap-2 shrink-0">
                 <a
                   href={q.problemUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-1.5 text-zinc-500 hover:text-sky-400 rounded hover:bg-zinc-800 transition-colors"
-                  title="Open problem link"
+                  className="p-2 text-muted hover:text-primary rounded hover:bg-surface border border-subtle transition-colors duration-150"
+                  title="Open Problem Link"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
 
-                <Button size="sm" variant="ghost" onClick={() => openDrawer(q)}>
+                <Button size="sm" variant="outline" onClick={() => openDrawer(q)}>
                   Notes
                 </Button>
 
-                <Button
-                  size="sm"
-                  variant="primary"
-                  onClick={() => setSelectedRevisionQuestion(q)}
-                  icon={<Zap className="w-3.5 h-3.5" />}
-                >
-                  Test & Complete
-                </Button>
+                {!r.isCompleted && (
+                  <Button
+                    size="sm"
+                    variant="primary"
+                    onClick={() => setSelectedRevisionQuestion(q)}
+                    icon={<Zap className="w-3.5 h-3.5" />}
+                  >
+                    Complete Review
+                  </Button>
+                )}
               </div>
             </div>
           ))}
         </div>
       )}
 
-      {/* Revision Test Modal */}
+      {/* Revision Modal */}
       <RevisionModal
         question={selectedRevisionQuestion}
         isOpen={Boolean(selectedRevisionQuestion)}

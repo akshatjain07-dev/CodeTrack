@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS public.questions (
 CREATE TABLE IF NOT EXISTS public.user_progress (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
-  question_id TEXT REFERENCES public.questions(id) ON DELETE CASCADE NOT NULL,
+  question_id TEXT NOT NULL,
   status TEXT CHECK (status IN ('Not Started', 'Attempted', 'Solved')) DEFAULT 'Not Started',
   notes TEXT,
   language_used TEXT,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS public.user_progress (
 -- 5. USER_BOOKMARKS
 CREATE TABLE IF NOT EXISTS public.user_bookmarks (
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
-  question_id TEXT REFERENCES public.questions(id) ON DELETE CASCADE NOT NULL,
+  question_id TEXT NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   PRIMARY KEY (user_id, question_id)
 );
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS public.user_bookmarks (
 CREATE TABLE IF NOT EXISTS public.revision_schedule (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
-  question_id TEXT REFERENCES public.questions(id) ON DELETE CASCADE NOT NULL,
+  question_id TEXT NOT NULL,
   stage INTEGER DEFAULT 1, -- Stage 1 (1d), Stage 2 (3d), Stage 3 (7d), Stage 4 (14d), Stage 5 (30d / Mastered)
   next_review_date DATE NOT NULL,
   last_reviewed_at TIMESTAMPTZ,
@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS public.revision_schedule (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE (user_id, question_id)
 );
+
 
 -- 7. DAILY_ACTIVITY (Event-sourced activity tracking for streaks & heatmaps)
 CREATE TABLE IF NOT EXISTS public.daily_activity (
@@ -131,10 +132,20 @@ CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
   INSERT INTO public.profiles (id, email, display_name, avatar_url)
-  VALUES (new.id, new.email, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url');
+  VALUES (
+    new.id,
+    COALESCE(new.email, ''),
+    COALESCE(new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'name', split_part(new.email, '@', 1), 'Developer'),
+    COALESCE(new.raw_user_meta_data->>'avatar_url', new.raw_user_meta_data->>'picture', '')
+  )
+  ON CONFLICT (id) DO UPDATE SET
+    display_name = COALESCE(EXCLUDED.display_name, public.profiles.display_name),
+    avatar_url = COALESCE(NULLIF(EXCLUDED.avatar_url, ''), public.profiles.avatar_url),
+    updated_at = NOW();
   
   INSERT INTO public.user_settings (user_id, daily_goal, preferred_language, theme)
-  VALUES (new.id, 3, 'C++', 'dark');
+  VALUES (new.id, 3, 'C++', 'dark')
+  ON CONFLICT (user_id) DO NOTHING;
   
   RETURN NEW;
 END;
@@ -144,3 +155,4 @@ DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+

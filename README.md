@@ -15,28 +15,28 @@ Inspired by the visual restraint, high information density, and intentionality o
 - **Personal Notes & Snippet Drawer:** Contextual slide-over drawer allowing students to record problem intuitions, time/space complexities, and edge cases.
 - **Real-Data Telemetry & Analytics:** Live analytics powered by Recharts (Solving velocity over time, difficulty distribution ratios, topic completion progress, and consistency streaks).
 - **Data Portability:** 1-click JSON backup export, spreadsheet-friendly CSV export, and complete state restoration from JSON files.
-- **Dual-Engine Architecture:** Runs offline immediately out of the box in **Local Demo Mode** (powered by `localStorage`), with optional one-step upgrade to **Supabase Cloud Sync** and Google OAuth.
+- **Google OAuth 2.0 & Supabase Cloud Sync:** Real OAuth authentication with persistent sessions, PKCE security flow, and PostgreSQL Row-Level Security (RLS) guaranteeing isolated user data.
+- **Graceful Fallback / Local Demo Mode:** Runs immediately out of the box in Local Demo Mode if cloud credentials are not yet configured, allowing friction-free development.
 
 ---
 
 ## 2. Technology Stack
 
-- **Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, React Router v6, Lucide React icons
+- **Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, React Router v7, Lucide React icons
 - **Data Visualizations:** Recharts
-- **Backend / Database:** Supabase PostgreSQL, Supabase Row-Level Security (RLS)
-- **Authentication:** Supabase Google OAuth
+- **Backend / Database:** Supabase PostgreSQL with Row-Level Security (RLS) policies
+- **Authentication:** Supabase Auth with Google OAuth (PKCE Flow)
 - **Source Dataset:** TakeUForward Striver's A2Z DSA Sheet (`DSA CHECKLIST TUF.pdf`)
 
 ---
 
-## 3. Getting Started (Local Development)
+## 3. Quick Start (Local Development)
 
 ### Prerequisites
 - Node.js (v18+ recommended)
 - npm or yarn
 
 ### 1. Installation
-Clone or navigate to the project directory:
 ```bash
 cd "C:\Users\Akshat Jain\.gemini\antigravity\scratch\codetrack"
 npm install
@@ -46,12 +46,13 @@ npm install
 ```bash
 npm run dev
 ```
-Open `http://localhost:5173` in your browser. The application will start in **Local Demo Mode** with sample questions and pre-seeded progress.
+Open `http://localhost:5173` in your browser. The application will start in **Local Demo Mode** if `.env` is not yet configured, allowing instant exploration.
 
 ### 3. Run Automated Tests
 ```bash
-node scripts/test-business-logic.js
+npm test
 ```
+Runs both the business logic test suite and the authentication & security audit script.
 
 ### 4. Build for Production
 ```bash
@@ -60,124 +61,160 @@ npm run build
 
 ---
 
-## 4. Connecting Supabase & Google Authentication
+## 4. Google Cloud & Supabase Setup Guide (Real Google Sign-In)
 
-CodeTrack uses an autonomous data adapter. When you are ready to persist data in the cloud:
+Follow these exact steps to connect real Google Sign-In to your CodeTrack application.
 
-### Step 1: Create a Supabase Project
-1. Go to [supabase.com](https://supabase.com) and create a free project.
-2. In the Supabase Dashboard, open the **SQL Editor**.
-3. Run the complete migration script located in:
-   `supabase/migrations/20261019_initial_schema.sql`
-   *(This creates the 8 required tables, indexes, triggers, and Row Level Security policies).*
+### Part A: Google Cloud Console Setup
 
-### Step 2: Configure Google Cloud OAuth
-1. Go to the [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
-2. Create an **OAuth 2.0 Client ID** (Web application).
-3. Under **Authorized redirect URIs**, add your Supabase project callback URL:
-   `https://<YOUR-PROJECT-REF>.supabase.co/auth/v1/callback`
-4. Copy your **Client ID** and **Client Secret**.
-5. In Supabase Dashboard, go to **Authentication > Providers > Google**, enable it, and paste your Google Client ID and Secret.
-
-### Step 3: Set Environment Variables
-Copy `.env.example` to `.env`:
-```bash
-cp .env.example .env
-```
-Add your credentials:
-```env
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-public-key
-```
-Restart your development server (`npm run dev`). CodeTrack will automatically detect Supabase and switch to Cloud Sync mode!
-
----
-
-## 5. TakeUForward PDF Ingestion Workflow
-
-The TakeUForward checklist has already been extracted and validated from `DSA CHECKLIST TUF.pdf` in the workspace root.
-
-To re-run the verification script:
-```bash
-node scripts/extract-pdf.js
-```
-Output:
-```
---- CodeTrack TakeUForward PDF Extractor & Validator ---
-[✓] Found source PDF: DSA CHECKLIST TUF.pdf (424.4 KB)
-[✓] Verified Question Bank integrity: 229 canonical problems mapped across 16 distinct topics.
-[✓] TakeUForward Striver Checklist successfully synchronized with CodeTrack.
-```
+1. **Open Google Cloud Console**:
+   Navigate to [Google Cloud Console](https://console.cloud.google.com/).
+2. **Create or Select a Project**:
+   Create a new project (e.g. `codetrack-dsa`) or select an existing one.
+3. **Configure OAuth Consent Screen**:
+   - Go to **APIs & Services > OAuth consent screen**.
+   - Choose **User Type**:
+     - Select **External** (unless you are using Google Workspace internal accounts).
+     - Click **Create**.
+   - **App Information**:
+     - App name: `CodeTrack`
+     - User support email: Select your email.
+     - Developer contact email: Enter your email.
+   - **Scopes**:
+     - Click **Add or Remove Scopes**.
+     - Select: `.../auth/userinfo.email`, `.../auth/userinfo.profile`, and `openid`.
+     - Click **Update** and save.
+   - **Test Users** (*Crucial while in Testing status*):
+     - While your OAuth app is in "Testing" mode, Google will only allow accounts explicitly added as Test Users to sign in!
+     - Add your personal Google account email (and any tester emails) under **Test users**.
+     - *(To allow any Google user worldwide to sign in, you must later click "Publish App" on the OAuth consent screen)*.
+4. **Create OAuth 2.0 Web Client Credentials**:
+   - Go to **APIs & Services > Credentials**.
+   - Click **+ Create Credentials > OAuth client ID**.
+   - Application type: **Web application**.
+   - Name: `CodeTrack Web Client`.
+   - **Authorized JavaScript origins**:
+     - `http://localhost:5173` (for local development)
+     - `https://your-app.vercel.app` (add your production domain after deploying)
+   - **Authorized redirect URIs**:
+     - Add your Supabase project OAuth callback URI:
+       `https://<YOUR-SUPABASE-PROJECT-REF>.supabase.co/auth/v1/callback`
+   - Click **Create**.
+   - Copy the generated **Client ID** and **Client Secret**.
 
 ---
 
-## 6. Project Architecture & File Organization
+### Part B: Supabase Project Setup
+
+1. **Create Project**:
+   Sign in to [supabase.com](https://supabase.com) and create a new project.
+2. **Execute Database Migration & RLS**:
+   - In your Supabase Dashboard, open the **SQL Editor**.
+   - Copy and paste the entire script from:
+     [`supabase/migrations/20261019_initial_schema.sql`](file:///supabase/migrations/20261019_initial_schema.sql)
+   - Click **Run**. This establishes:
+     - `profiles` table (with automated trigger on new Google sign-ups).
+     - `user_progress`, `user_bookmarks`, `revision_schedule`, `daily_activity`, and `user_settings` tables.
+     - Row Level Security (RLS) policies ensuring each authenticated user (`auth.uid() = user_id`) can only access their own private data.
+3. **Enable Google Provider in Supabase**:
+   - In the Supabase Dashboard, navigate to **Authentication > Providers**.
+   - Find **Google** and toggle it **Enabled**.
+   - Paste your **Client ID** and **Client Secret** obtained from Google Cloud Console in Part A.
+   - Click **Save**.
+4. **Configure URL Redirects in Supabase**:
+   - In the Supabase Dashboard, navigate to **Authentication > URL Configuration**.
+   - **Site URL**:
+     - Set to `http://localhost:5173` (for local development) or `https://your-app.vercel.app` (in production).
+   - **Redirect URLs** (Add both):
+     - `http://localhost:5173/**`
+     - `http://localhost:5173/auth/callback`
+     - `https://your-app.vercel.app/**` (for production)
+     - `https://your-app.vercel.app/auth/callback` (for production)
+   - Click **Save**.
+
+---
+
+### Part C: Configure Environment Variables
+
+1. Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Open `.env` and fill in your Supabase credentials:
+   ```env
+   VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+   VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+   ```
+   > **Security Notice:**
+   > - `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` are safe for frontend code.
+   > - **NEVER** expose your Supabase `service_role` key or Google `client_secret` in `.env` or frontend files.
+
+3. Restart your dev server:
+   ```bash
+   npm run dev
+   ```
+4. Click **Continue with Google** on the login page to test live authentication!
+
+---
+
+## 5. Deployment Guide (Vercel)
+
+1. **Push to GitHub**:
+   Commit and push your project to a GitHub repository.
+2. **Connect to Vercel**:
+   - Go to [vercel.com](https://vercel.com) and click **Add New > Project**.
+   - Import your GitHub repository.
+   - Framework Preset: **Vite**.
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+3. **Add Environment Variables**:
+   Under **Environment Variables**, add:
+   - `VITE_SUPABASE_URL` = `https://your-project-ref.supabase.co`
+   - `VITE_SUPABASE_ANON_KEY` = `your-supabase-anon-key`
+4. **Deploy**:
+   Click **Deploy**.
+5. **Update Production URLs in Google Cloud & Supabase**:
+   Once Vercel assigns your production domain (e.g. `https://codetrack.vercel.app`):
+   - In **Google Cloud Console > Credentials > Web Client**:
+     - Add `https://codetrack.vercel.app` to **Authorized JavaScript origins**.
+   - In **Supabase Dashboard > Authentication > URL Configuration**:
+     - Add `https://codetrack.vercel.app` to **Site URL**.
+     - Add `https://codetrack.vercel.app/auth/callback` to **Redirect URLs**.
+
+---
+
+## 6. Architecture & File Reference
 
 ```
 codetrack/
 ├── scripts/
-│   ├── extract-pdf.js              # PDF inspection & verification utility
-│   └── test-business-logic.js      # Automated unit tests for spaced repetition & streaks
+│   ├── extract-pdf.js              # TakeUForward PDF validator
+│   ├── test-business-logic.js      # Spaced repetition & streak unit tests
+│   └── test-auth-security.js       # RLS, secret leakage, and PKCE audit script
 ├── src/
 │   ├── components/
+│   │   ├── auth/
+│   │   │   └── ProtectedRoute.tsx  # Route guard with session restoration
 │   │   ├── layout/
-│   │   │   └── AppShell.tsx        # Persistent sidebar, command palette, and header
-│   │   └── ui/
-│   │       ├── Badge.tsx           # Difficulty, status, and platform tags
-│   │       ├── Button.tsx          # Minimalist developer button variants
-│   │       ├── CommandPalette.tsx  # Global Ctrl+K quick search
-│   │       ├── Drawer.tsx          # Slide-over problem details and notes editor
-│   │       ├── EmptyState.tsx      # High-density clean empty states
-│   │       ├── Input.tsx           # Filter input primitives
-│   │       ├── Kbd.tsx             # Keyboard shortcut pill
-│   │       ├── ProgressBar.tsx     # Custom progress gauges
-│   │       ├── QuestionDrawer.tsx  # Details drawer with notes autosave
-│   │       ├── RevisionModal.tsx   # Spaced repetition confidence rating modal
-│   │       └── Select.tsx          # Clean select component
-│   ├── data/
-│   │   └── questionsData.ts        # 229 authentic TUF questions & topic taxonomy
+│   │   │   └── AppShell.tsx        # User profile, Google avatar, cloud status
+│   │   └── ui/                     # Modular component primitives
+│   ├── context/
+│   │   └── AuthContext.tsx         # Supabase Google OAuth state & session management
 │   ├── hooks/
-│   │   └── useCodeTrack.ts         # Real-time state synchronization hook
+│   │   ├── useAuth.ts              # Authentication hook
+│   │   └── useCodeTrack.ts         # User-scoped cloud synchronization hook
 │   ├── pages/
-│   │   ├── AllQuestionsPage.tsx    # Central question bank with filters & sort
-│   │   ├── AnalyticsPage.tsx       # Recharts telemetry & velocity insights
-│   │   ├── BookmarksPage.tsx       # Starred problems collection
-│   │   ├── DashboardPage.tsx       # Workspace overview & 12-week heatmap
-│   │   ├── LoginPage.tsx           # Google OAuth sign-in view
-│   │   ├── PlatformsPage.tsx       # Host platforms & public profile links
-│   │   ├── RevisionCenterPage.tsx  # Spaced repetition scheduler
-│   │   ├── SettingsPage.tsx        # Preferences, goal settings, JSON/CSV export
-│   │   └── TopicsPage.tsx          # 16-module curriculum breakdown
+│   │   ├── AuthCallbackPage.tsx    # PKCE authorization code exchange & error handler
+│   │   ├── LoginPage.tsx           # Real Google OAuth sign-in / demo fallback
+│   │   └── SettingsPage.tsx        # Google account details & manual cloud sync
 │   ├── services/
-│   │   ├── storage.ts              # Reactive storage engine & streak calculations
-│   │   └── supabase.ts             # Supabase client wrapper & connectivity check
-│   ├── types/
-│   │   └── index.ts                # TypeScript interfaces
-│   ├── App.tsx                     # React Router definition
-│   ├── index.css                   # Tailwind v4 theme & developer styling
-│   └── main.tsx                    # React DOM root
+│   │   ├── cloudSync.ts            # Supabase PostgreSQL RLS sync adapter
+│   │   ├── storage.ts              # Local cache engine & reactive event bus
+│   │   └── supabase.ts             # PKCE-enabled Supabase client
+│   ├── App.tsx                     # Global AuthProvider, callback, and routes
+│   └── types/index.ts              # TypeScript definitions
 ├── supabase/
 │   └── migrations/
-│       └── 20261019_initial_schema.sql # Complete PostgreSQL DDL with RLS
-├── .env.example                    # Template environment variables
-├── package.json
-├── tsconfig.json
-└── vite.config.ts
+│       └── 20261019_initial_schema.sql # PostgreSQL DDL with airtight RLS
+└── .env.example                    # Environment template with documentation
 ```
-
----
-
-## 7. Deployment Guide
-
-### Deploying to Vercel
-1. Push your repository to GitHub.
-2. Go to [vercel.com](https://vercel.com) and import the project.
-3. Framework Preset: **Vite**.
-4. Add environment variables `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` under project settings.
-5. Deploy.
-
-### Deploying to Netlify
-1. Create a `netlify.toml` or connect via Netlify Dashboard.
-2. Build command: `npm run build`
-3. Publish directory: `dist`
-4. Add the environment variables in Netlify site settings.

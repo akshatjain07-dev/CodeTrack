@@ -6,6 +6,15 @@ import type {
   UserProgress,
   UserSettings,
 } from '../types';
+import {
+  fetchCloudUserData,
+  pushAllLocalDataToCloud,
+  syncBookmarkToCloud,
+  syncDailyActivityToCloud,
+  syncQuestionProgressToCloud,
+  syncRevisionToCloud,
+  syncUserSettingsToCloud,
+} from './cloudSync';
 
 const STORAGE_KEYS = {
   PROGRESS: 'codetrack_user_progress',
@@ -14,6 +23,103 @@ const STORAGE_KEYS = {
   ACTIVITY: 'codetrack_daily_activity',
   SETTINGS: 'codetrack_user_settings',
 };
+
+let currentUserId: string | null = null;
+let isSyncing = false;
+
+export function getActiveUserId(): string | null {
+  return currentUserId;
+}
+
+export function isCloudSyncInProgress(): boolean {
+  return isSyncing;
+}
+
+export async function setCurrentUser(userId: string | null): Promise<void> {
+  if (currentUserId === userId) return;
+  currentUserId = userId;
+
+  if (userId) {
+    await refreshFromCloud(userId);
+  }
+}
+
+export async function refreshFromCloud(userId: string): Promise<boolean> {
+  if (!userId) return false;
+  try {
+    isSyncing = true;
+    notifyListeners();
+    const cloudData = await fetchCloudUserData(userId);
+    if (cloudData) {
+      const hasCloudData =
+        Object.keys(cloudData.progress).length > 0 ||
+        cloudData.bookmarks.length > 0 ||
+        Object.keys(cloudData.revisions).length > 0;
+
+      if (hasCloudData) {
+        localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(cloudData.progress));
+        localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(cloudData.bookmarks));
+        localStorage.setItem(STORAGE_KEYS.REVISIONS, JSON.stringify(cloudData.revisions));
+        localStorage.setItem(STORAGE_KEYS.ACTIVITY, JSON.stringify(cloudData.dailyActivity));
+        if (cloudData.settings) {
+          const currentSettings = getUserSettings();
+          const merged = { ...currentSettings, ...cloudData.settings };
+          localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(merged));
+        }
+      } else {
+        // First login: upload existing local progress so work is preserved in Supabase
+        await pushAllLocalDataToCloud(
+          userId,
+          getStoredProgress(),
+          getStoredBookmarks(),
+          getStoredRevisions(),
+          getDailyActivityMap(),
+          getUserSettings()
+        );
+      }
+      notifyListeners();
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error('Failed to sync data from cloud:', err);
+    return false;
+  } finally {
+    isSyncing = false;
+    notifyListeners();
+  }
+}
+
+export async function forcePushToCloud(userId: string) {
+  if (!userId) return { success: false, count: 0 };
+  isSyncing = true;
+  notifyListeners();
+  try {
+    const res = await pushAllLocalDataToCloud(
+      userId,
+      getStoredProgress(),
+      getStoredBookmarks(),
+      getStoredRevisions(),
+      getDailyActivityMap(),
+      getUserSettings()
+    );
+    return res;
+  } finally {
+    isSyncing = false;
+    notifyListeners();
+  }
+}
+
+export function resetUserDataForLogout(): void {
+  currentUserId = null;
+  localStorage.removeItem(STORAGE_KEYS.PROGRESS);
+  localStorage.removeItem(STORAGE_KEYS.BOOKMARKS);
+  localStorage.removeItem(STORAGE_KEYS.REVISIONS);
+  localStorage.removeItem(STORAGE_KEYS.ACTIVITY);
+  localStorage.removeItem(STORAGE_KEYS.SETTINGS);
+  notifyListeners();
+}
+
 
 // Date Helper: Always returns local date as YYYY-MM-DD
 export function getLocalDateString(date: Date = new Date()): string {
@@ -100,6 +206,10 @@ export function updateQuestionStatus(questionId: string, newStatus: QuestionStat
   progressMap[questionId] = existing;
   localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(progressMap));
   notifyListeners();
+
+  if (currentUserId) {
+    syncQuestionProgressToCloud(currentUserId, existing);
+  }
 }
 
 export function saveQuestionNotes(questionId: string, notes: string): void {
@@ -117,6 +227,10 @@ export function saveQuestionNotes(questionId: string, notes: string): void {
   progressMap[questionId] = existing;
   localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(progressMap));
   notifyListeners();
+
+  if (currentUserId) {
+    syncQuestionProgressToCloud(currentUserId, existing);
+  }
 }
 
 // ==========================================
@@ -144,6 +258,10 @@ export function toggleBookmark(questionId: string): boolean {
   }
   localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(Array.from(bookmarks)));
   notifyListeners();
+
+  if (currentUserId) {
+    syncBookmarkToCloud(currentUserId, questionId, isBookmarked);
+  }
   return isBookmarked;
 }
 
@@ -182,6 +300,10 @@ function autoScheduleRevisionOnSolve(questionId: string) {
     confidenceHistory: [],
   };
   localStorage.setItem(STORAGE_KEYS.REVISIONS, JSON.stringify(revisions));
+
+  if (currentUserId) {
+    syncRevisionToCloud(currentUserId, revisions[questionId]);
+  }
 }
 
 export function scheduleManualRevision(questionId: string, customDate?: string) {
@@ -200,6 +322,10 @@ export function scheduleManualRevision(questionId: string, customDate?: string) 
   };
   localStorage.setItem(STORAGE_KEYS.REVISIONS, JSON.stringify(revisions));
   notifyListeners();
+
+  if (currentUserId) {
+    syncRevisionToCloud(currentUserId, revisions[questionId]);
+  }
 }
 
 export function completeRevision(
@@ -257,6 +383,10 @@ export function completeRevision(
   // Record revision completion in daily activity
   recordDailyRevision(todayStr);
   notifyListeners();
+
+  if (currentUserId) {
+    syncRevisionToCloud(currentUserId, existing);
+  }
 }
 
 // ==========================================
@@ -282,6 +412,10 @@ function recordDailySolving(dateStr: string, delta: number) {
   record.questionsSolved = Math.max(0, record.questionsSolved + delta);
   map[dateStr] = record;
   localStorage.setItem(STORAGE_KEYS.ACTIVITY, JSON.stringify(map));
+
+  if (currentUserId) {
+    syncDailyActivityToCloud(currentUserId, record);
+  }
 }
 
 function recordDailyRevision(dateStr: string) {
@@ -294,6 +428,10 @@ function recordDailyRevision(dateStr: string) {
   record.revisionsCompleted += 1;
   map[dateStr] = record;
   localStorage.setItem(STORAGE_KEYS.ACTIVITY, JSON.stringify(map));
+
+  if (currentUserId) {
+    syncDailyActivityToCloud(currentUserId, record);
+  }
 }
 
 export function calculateStreaks(): { currentStreak: number; longestStreak: number } {
@@ -384,6 +522,10 @@ export function updateUserSettings(partial: Partial<UserSettings>): UserSettings
   const updated = { ...current, ...partial };
   localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(updated));
   notifyListeners();
+
+  if (currentUserId) {
+    syncUserSettingsToCloud(currentUserId, updated);
+  }
   return updated;
 }
 

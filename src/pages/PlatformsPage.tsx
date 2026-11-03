@@ -8,12 +8,11 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { useCodeTrack } from '../hooks/useCodeTrack';
-import { QUESTIONS } from '../data/questionsData';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 
 export const PlatformsPage: React.FC = () => {
-  const { settings, updateSettings, progress } = useCodeTrack();
+  const { settings, updateSettings, progress, questions } = useCodeTrack();
 
   const [leetcodeUser, setLeetcodeUser] = useState(settings.leetcodeUsername || '');
   const [codeforcesUser, setCodeforcesUser] = useState(settings.codeforcesUsername || '');
@@ -26,32 +25,32 @@ export const PlatformsPage: React.FC = () => {
       description: 'The premier online platform for technical coding interview practice and algorithmic questions.',
       url: 'https://leetcode.com',
       profileBase: 'https://leetcode.com/u/',
-      count: QUESTIONS.filter((q) => q.platform === 'LeetCode').length,
-      solvedCount: QUESTIONS.filter((q) => q.platform === 'LeetCode' && progress[q.id]?.status === 'Solved').length,
+      count: questions.filter((q) => q.platform === 'LeetCode').length,
+      solvedCount: questions.filter((q) => q.platform === 'LeetCode' && progress[q.id]?.status === 'Solved').length,
     },
     {
       id: 'GeeksforGeeks',
       name: 'GeeksforGeeks (GFG)',
       description: 'Extensive repository of interview practice questions, company archives, and detailed articles.',
       url: 'https://www.geeksforgeeks.org',
-      count: QUESTIONS.filter((q) => q.platform === 'GeeksforGeeks').length,
-      solvedCount: QUESTIONS.filter((q) => q.platform === 'GeeksforGeeks' && progress[q.id]?.status === 'Solved').length,
+      count: questions.filter((q) => q.platform === 'GeeksforGeeks').length,
+      solvedCount: questions.filter((q) => q.platform === 'GeeksforGeeks' && progress[q.id]?.status === 'Solved').length,
     },
     {
       id: 'CodingNinjas',
       name: 'Coding Ninjas Studio',
       description: 'Curated problem sets and guided coding paths tailored for Indian engineering campus placements.',
       url: 'https://www.naukri.com/code360',
-      count: QUESTIONS.filter((q) => q.platform === 'CodingNinjas').length,
-      solvedCount: QUESTIONS.filter((q) => q.platform === 'CodingNinjas' && progress[q.id]?.status === 'Solved').length,
+      count: questions.filter((q) => q.platform === 'CodingNinjas').length,
+      solvedCount: questions.filter((q) => q.platform === 'CodingNinjas' && progress[q.id]?.status === 'Solved').length,
     },
     {
       id: 'TakeUForward',
       name: 'TakeUForward (TUF+)',
       description: "Striver's official editorial and video curriculum hub providing in-depth intuition.",
       url: 'https://takeuforward.org',
-      count: QUESTIONS.filter((q) => q.platform === 'TakeUForward').length,
-      solvedCount: QUESTIONS.filter((q) => q.platform === 'TakeUForward' && progress[q.id]?.status === 'Solved').length,
+      count: questions.filter((q) => q.platform === 'TakeUForward').length,
+      solvedCount: questions.filter((q) => q.platform === 'TakeUForward' && progress[q.id]?.status === 'Solved').length,
     },
   ];
 
@@ -68,29 +67,29 @@ export const PlatformsPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-zinc-800/60">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-subtle">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono uppercase tracking-wider text-sky-400 font-semibold">
+            <span className="text-xs font-mono uppercase tracking-wider text-muted font-medium">
               External Coding Ecosystem
             </span>
-            <span className="text-zinc-600">·</span>
-            <span className="text-xs text-zinc-500 font-mono">
+            <span className="text-muted">·</span>
+            <span className="text-xs text-muted font-mono">
               Verified Problem Links & Profiles
             </span>
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-white">Coding Platforms</h1>
-          <p className="text-xs text-zinc-400 mt-0.5">
+          <h1 className="text-2xl font-semibold tracking-tight text-primary">Coding Platforms</h1>
+          <p className="text-xs text-secondary mt-0.5">
             Organize questions by original host platform and configure your public handles for quick navigation.
           </p>
         </div>
       </div>
 
       {/* Privacy Notice Banner */}
-      <div className="p-3.5 rounded-lg border border-zinc-800 bg-zinc-900/60 flex items-start gap-3">
-        <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-        <div className="text-xs text-zinc-400 space-y-1">
-          <span className="font-semibold text-zinc-200 block">
+      <div className="p-3.5 rounded-lg border border-subtle bg-surface-elevated flex items-start gap-3">
+        <ShieldCheck className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
+        <div className="text-xs text-secondary space-y-1">
+          <span className="font-semibold text-primary block">
             Independent, Safe & Zero-Credential Policy
           </span>
           <p>
@@ -101,36 +100,38 @@ export const PlatformsPage: React.FC = () => {
 
       {/* Platform Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {platforms.map((p) => (
+        {platforms.map((p, idx) => (
           <div
             key={p.id}
-            className="p-5 rounded-lg bg-zinc-900/60 border border-zinc-800 flex flex-col justify-between space-y-4"
+            style={{ animationDelay: `${Math.min(idx * 40, 200)}ms` }}
+            className="p-5 rounded-lg bg-surface-elevated border border-subtle card-shadow flex flex-col justify-between space-y-4 animate-fade-in hover:border-default transition-all duration-150"
           >
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-mono text-zinc-500">{p.id}</span>
-                <span className="text-xs font-mono text-emerald-400">
+                <span className="text-xs font-mono text-muted">{p.id}</span>
+                <span className="text-xs font-mono text-primary font-medium">
                   {p.solvedCount} / {p.count} Solved
                 </span>
               </div>
-              <h3 className="text-base font-semibold text-zinc-100 flex items-center justify-between">
+              <h3 className="text-base font-semibold text-primary flex items-center justify-between">
                 {p.name}
                 <a
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-zinc-500 hover:text-sky-400 p-1"
+                  className="text-muted hover:text-primary p-1 transition-colors"
+                  title={`Visit ${p.name}`}
                 >
                   <ExternalLink className="w-4 h-4" />
                 </a>
               </h3>
-              <p className="text-xs text-zinc-400 mt-1 leading-relaxed">{p.description}</p>
+              <p className="text-xs text-secondary mt-1 leading-relaxed">{p.description}</p>
             </div>
 
-            <div className="pt-3 border-t border-zinc-800/60 flex items-center justify-between">
+            <div className="pt-3 border-t border-subtle flex items-center justify-between">
               <NavLink
                 to={`/questions?platform=${p.id}`}
-                className="text-xs font-medium text-sky-400 hover:text-sky-300 inline-flex items-center gap-1"
+                className="text-xs font-medium text-secondary hover:text-primary inline-flex items-center gap-1 transition-colors"
               >
                 Filter {p.count} Questions
                 <ArrowRight className="w-3 h-3" />
@@ -141,22 +142,22 @@ export const PlatformsPage: React.FC = () => {
       </div>
 
       {/* Public Profile Configuration */}
-      <div className="p-5 rounded-lg bg-zinc-900/60 border border-zinc-800 space-y-4 max-w-2xl">
-        <h3 className="text-sm font-semibold text-zinc-200 flex items-center gap-2">
-          <Terminal className="w-4 h-4 text-sky-400" />
+      <div className="p-5 rounded-lg bg-surface-elevated border border-subtle card-shadow space-y-4 max-w-2xl">
+        <h3 className="text-sm font-semibold text-primary flex items-center gap-2">
+          <Terminal className="w-4 h-4 text-secondary" />
           Link Your Public Profiles
         </h3>
-        <p className="text-xs text-zinc-400">
+        <p className="text-xs text-secondary">
           Save your public usernames to enable one-click access to your online submissions and profiles.
         </p>
 
         <form onSubmit={handleSaveHandles} className="space-y-4 pt-1">
           <div>
-            <label className="text-xs font-medium text-zinc-300 block mb-1">
+            <label className="text-xs font-medium text-secondary block mb-1">
               LeetCode Username
             </label>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono text-zinc-500">leetcode.com/u/</span>
+              <span className="text-xs font-mono text-muted">leetcode.com/u/</span>
               <Input
                 placeholder="e.g. akshat_jain"
                 value={leetcodeUser}
@@ -167,7 +168,7 @@ export const PlatformsPage: React.FC = () => {
                   href={`https://leetcode.com/u/${leetcodeUser}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 text-zinc-400 hover:text-sky-400"
+                  className="p-2 text-muted hover:text-primary transition-colors"
                 >
                   <ExternalLink className="w-4 h-4" />
                 </a>
@@ -176,11 +177,11 @@ export const PlatformsPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="text-xs font-medium text-zinc-300 block mb-1">
+            <label className="text-xs font-medium text-secondary block mb-1">
               Codeforces Handle
             </label>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono text-zinc-500">codeforces.com/profile/</span>
+              <span className="text-xs font-mono text-muted">codeforces.com/profile/</span>
               <Input
                 placeholder="e.g. tourist"
                 value={codeforcesUser}
@@ -191,7 +192,7 @@ export const PlatformsPage: React.FC = () => {
                   href={`https://codeforces.com/profile/${codeforcesUser}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 text-zinc-400 hover:text-sky-400"
+                  className="p-2 text-muted hover:text-primary transition-colors"
                 >
                   <ExternalLink className="w-4 h-4" />
                 </a>
@@ -204,7 +205,7 @@ export const PlatformsPage: React.FC = () => {
               Save Profiles
             </Button>
             {saveSuccess && (
-              <span className="text-xs text-emerald-400 font-medium">
+              <span className="text-xs text-primary font-medium font-mono">
                 Profiles saved successfully!
               </span>
             )}

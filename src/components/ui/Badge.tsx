@@ -21,13 +21,13 @@ export const Badge: React.FC<BadgeProps> = ({
   // Difficulty styling
   if (variant === 'difficulty' && difficulty) {
     const diffStyles: Record<Difficulty, string> = {
-      Easy: 'text-emerald-400 bg-emerald-950/40 border-emerald-800/40',
-      Medium: 'text-amber-400 bg-amber-950/40 border-amber-800/40',
-      Hard: 'text-rose-400 bg-rose-950/40 border-rose-800/40',
+      Easy: 'text-[#70D6A3] border-[#70D6A3]/30 bg-[#70D6A3]/10 font-medium',
+      Medium: 'text-[#FFD447] border-[#FFD447]/30 bg-[#FFD447]/10 font-medium',
+      Hard: 'text-[#F04483] border-[#F04483]/30 bg-[#F04483]/10 font-semibold',
     };
     return (
       <span
-        className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-medium border ${diffStyles[difficulty]} ${className}`}
+        className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono border ${diffStyles[difficulty]} ${className}`}
       >
         {difficulty}
       </span>
@@ -37,21 +37,21 @@ export const Badge: React.FC<BadgeProps> = ({
   // Status styling
   if (variant === 'status' && status) {
     const statusStyles: Record<QuestionStatus, string> = {
-      Solved: 'text-emerald-400 bg-emerald-950/30 border-emerald-800/40',
-      Attempted: 'text-amber-400 bg-amber-950/30 border-amber-800/40',
-      'Not Started': 'text-zinc-400 bg-zinc-800/30 border-zinc-700/40',
+      Solved: 'text-[#70D6A3] bg-[#70D6A3]/10 border-[#70D6A3]/30 font-medium',
+      Attempted: 'text-[#FFD447] bg-[#FFD447]/10 border-[#FFD447]/30 font-medium',
+      'Not Started': 'text-secondary bg-surface border-subtle',
     };
     return (
       <span
-        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs font-medium border ${statusStyles[status]} ${className}`}
+        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs border ${statusStyles[status]} ${className}`}
       >
         <span
           className={`w-1.5 h-1.5 rounded-full ${
             status === 'Solved'
-              ? 'bg-emerald-400'
+              ? 'bg-[#70D6A3]'
               : status === 'Attempted'
-              ? 'bg-amber-400 animate-pulse'
-              : 'bg-zinc-500'
+              ? 'bg-[#FFD447]'
+              : 'border border-muted'
           }`}
         />
         {status}
@@ -63,7 +63,7 @@ export const Badge: React.FC<BadgeProps> = ({
   if (variant === 'platform' && platform) {
     return (
       <span
-        className={`inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-mono text-zinc-400 bg-zinc-800/60 border border-zinc-700/50 ${className}`}
+        className={`inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-mono text-secondary bg-surface border border-subtle ${className}`}
       >
         {platform}
       </span>
@@ -72,7 +72,7 @@ export const Badge: React.FC<BadgeProps> = ({
 
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-mono text-zinc-300 bg-zinc-800/50 border border-zinc-700/40 ${className}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-mono text-secondary bg-surface border border-subtle ${className}`}
     >
       {children}
     </span>

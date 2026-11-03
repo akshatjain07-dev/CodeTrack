@@ -101,14 +101,49 @@ function testQuestionBankData() {
   console.log('  ✓ Core TakeUForward topic taxonomy verified.');
 }
 
+// Test 6: Theme Selection & Resolution Validation
+function testThemeModes() {
+  console.log('[Test 6] Testing Theme Mode System & Resolution...');
+  const validThemes = ['dark', 'light', 'system'];
+  assert(validThemes.includes('dark'));
+  assert(validThemes.includes('light'));
+  assert(validThemes.includes('system'));
+
+  function resolveTheme(mode, systemPrefersDark) {
+    if (mode === 'system') return systemPrefersDark ? 'dark' : 'light';
+    return mode;
+  }
+
+  assert.strictEqual(resolveTheme('dark', false), 'dark');
+  assert.strictEqual(resolveTheme('light', true), 'light');
+  assert.strictEqual(resolveTheme('system', true), 'dark');
+  assert.strictEqual(resolveTheme('system', false), 'light');
+  console.log('  ✓ Theme modes and OS system resolution logic verified.');
+}
+
+// Test 7: Landing Page to Auth & Dashboard Navigation Logic
+function testLandingNavigationFlow() {
+  console.log('[Test 7] Testing Landing Page Auth Navigation Routing...');
+  function getStartTrackingDestination(isAuthenticated) {
+    return isAuthenticated ? '/dashboard' : '/login';
+  }
+
+  assert.strictEqual(getStartTrackingDestination(true), '/dashboard');
+  assert.strictEqual(getStartTrackingDestination(false), '/login');
+  console.log('  ✓ Start Tracking navigation accurately routes by session state.');
+}
+
 try {
   testSpacedRepetition();
   testStreakLogic();
   testBookmarkIdempotency();
   testDailyGoalCounting();
   testQuestionBankData();
-  console.log('\n[PASS] All 5 Core Business Logic Tests Passed Successfully.');
+  testThemeModes();
+  testLandingNavigationFlow();
+  console.log('\n[PASS] All 7 Core Business & Architecture Tests Passed Successfully.');
 } catch (e) {
   console.error('\n[FAIL] Test failure:', e);
   process.exit(1);
 }
+

@@ -4,6 +4,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'outline' | 'danger';
   size?: 'sm' | 'md' | 'lg';
   icon?: React.ReactNode;
+  loading?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -11,12 +12,13 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'secondary',
   size = 'md',
   icon,
+  loading = false,
   className = '',
   disabled,
   ...props
 }) => {
   const baseStyles =
-    'inline-flex items-center justify-center gap-2 rounded-md font-medium text-sm transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer select-none';
+    'inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all duration-150 ease-out focus:outline-none focus:ring-1 focus:ring-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none cursor-pointer select-none';
 
   const sizeStyles = {
     sm: 'px-2.5 py-1 text-xs',
@@ -25,20 +27,31 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const variantStyles = {
-    primary: 'bg-sky-500 text-slate-950 hover:bg-sky-400 font-semibold shadow-sm',
-    secondary: 'bg-zinc-800 text-zinc-100 hover:bg-zinc-700 border border-zinc-700/60',
-    outline: 'bg-transparent text-zinc-300 hover:text-white hover:bg-zinc-800/60 border border-zinc-700',
-    ghost: 'bg-transparent text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/40',
-    danger: 'bg-rose-950/40 text-rose-300 hover:bg-rose-900/60 border border-rose-800/50',
+    primary:
+      'bg-[#F04483] text-white hover:bg-[#D83371] font-semibold shadow-xs hover:shadow-md active:scale-[0.98] border border-transparent',
+    secondary:
+      'bg-surface-elevated text-primary hover:bg-surface-subtle border border-subtle hover:border-default shadow-xs hover:shadow-sm active:scale-[0.98]',
+    outline:
+      'bg-transparent text-secondary hover:text-primary hover:bg-surface-subtle border border-subtle hover:border-default active:scale-[0.98]',
+    ghost:
+      'bg-transparent text-secondary hover:text-primary hover:bg-surface-subtle active:scale-[0.98]',
+    danger:
+      'bg-[#F04483]/15 text-[#F04483] hover:bg-[#F04483]/25 border border-[#F04483]/30 active:scale-[0.98]',
   };
 
   return (
     <button
       className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`}
-      disabled={disabled}
+      disabled={disabled || loading}
       {...props}
     >
-      {icon && <span className="inline-flex shrink-0">{icon}</span>}
+      {loading ? (
+        <span className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin shrink-0" />
+      ) : icon ? (
+        <span className="inline-flex shrink-0 transition-transform duration-150 group-hover:scale-105">
+          {icon}
+        </span>
+      ) : null}
       {children}
     </button>
   );

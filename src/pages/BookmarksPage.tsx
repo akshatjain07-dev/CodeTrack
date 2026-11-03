@@ -11,7 +11,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { useCodeTrack } from '../hooks/useCodeTrack';
-import { QUESTIONS, TOPICS } from '../data/questionsData';
+import { TOPICS } from '../data/questionsData';
 import type { Question } from '../types';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
@@ -20,17 +20,19 @@ import { EmptyState } from '../components/ui/EmptyState';
 
 export const BookmarksPage: React.FC = () => {
   const { openDrawer } = useOutletContext<{ openDrawer: (q: Question) => void }>();
-  const { bookmarks, progress, updateStatus, toggleBookmark } = useCodeTrack();
+  const { bookmarks, progress, updateStatus, toggleBookmark, questions } = useCodeTrack();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('all');
   const [selectedStatus, setSelectedStatus] = useState('all');
+  const [poppingCheckId, setPoppingCheckId] = useState<string | null>(null);
+  const [poppingStarId, setPoppingStarId] = useState<string | null>(null);
 
   const bookmarkedQuestions = useMemo(() => {
     return bookmarks
-      .map((id) => QUESTIONS.find((q) => q.id === id))
+      .map((id) => questions.find((q) => q.id === id))
       .filter(Boolean) as Question[];
-  }, [bookmarks]);
+  }, [bookmarks, questions]);
 
   const filteredBookmarks = useMemo(() => {
     return bookmarkedQuestions.filter((q) => {
@@ -61,19 +63,19 @@ export const BookmarksPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-zinc-800/60">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-subtle">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold">
+            <span className="text-xs font-mono uppercase tracking-wider text-muted font-medium">
               Saved Collection
             </span>
-            <span className="text-zinc-600">·</span>
-            <span className="text-xs text-zinc-500 font-mono">
+            <span className="text-muted">·</span>
+            <span className="text-xs text-muted font-mono">
               {bookmarkedQuestions.length} Questions Starred
             </span>
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-white">Bookmarked Questions</h1>
-          <p className="text-xs text-zinc-400 mt-0.5">
+          <h1 className="text-2xl font-semibold tracking-tight text-primary">Bookmarked Questions</h1>
+          <p className="text-xs text-secondary mt-0.5">
             Quickly revisit tricky interview questions and essential algorithmic patterns you've flagged.
           </p>
         </div>
@@ -96,11 +98,11 @@ export const BookmarksPage: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {/* Filters */}
-          <div className="p-3 rounded-lg bg-zinc-900/60 border border-zinc-800 flex flex-col md:flex-row gap-3">
+          <div className="p-3.5 rounded-lg bg-surface-elevated border border-subtle flex flex-col md:flex-row gap-3">
             <div className="flex-1">
               <Input
                 icon={<Search className="w-4 h-4" />}
-                placeholder="Search your saved bookmarks..."
+                placeholder="Search saved problems..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -110,7 +112,7 @@ export const BookmarksPage: React.FC = () => {
               <select
                 value={selectedTopic}
                 onChange={(e) => setSelectedTopic(e.target.value)}
-                className="bg-zinc-900 text-zinc-200 border border-zinc-700/60 rounded-md px-3 py-1.5 text-xs focus:outline-none focus:border-sky-500"
+                className="bg-surface text-primary border border-subtle rounded-md px-3 py-1.5 text-xs focus:outline-none focus:border-default cursor-pointer"
               >
                 <option value="all">All Topics</option>
                 {TOPICS.map((t) => (
@@ -123,7 +125,7 @@ export const BookmarksPage: React.FC = () => {
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
-                className="bg-zinc-900 text-zinc-200 border border-zinc-700/60 rounded-md px-3 py-1.5 text-xs focus:outline-none focus:border-sky-500"
+                className="bg-surface text-primary border border-subtle rounded-md px-3 py-1.5 text-xs focus:outline-none focus:border-default cursor-pointer"
               >
                 <option value="all">All Statuses</option>
                 <option value="Not Started">Not Started</option>
@@ -135,83 +137,94 @@ export const BookmarksPage: React.FC = () => {
 
           {/* Bookmarks List */}
           {filteredBookmarks.length === 0 ? (
-            <div className="p-8 text-center text-xs text-zinc-500 bg-zinc-900/30 border border-zinc-800 rounded-lg">
-              No bookmarked questions matched the chosen filters.
+            <div className="p-8 text-center text-xs text-muted bg-surface-elevated border border-subtle rounded-lg">
+              No bookmarks match your search filters.
             </div>
           ) : (
-            <div className="divide-y divide-zinc-800/70 border border-zinc-800 rounded-lg overflow-hidden bg-zinc-900/40">
-              {filteredBookmarks.map((q) => {
+            <div className="divide-y divide-subtle border border-subtle rounded-md overflow-hidden bg-surface-elevated">
+              {filteredBookmarks.map((q, idx) => {
                 const currentStatus = progress[q.id]?.status || 'Not Started';
 
                 return (
                   <div
                     key={q.id}
-                    className="flex items-center justify-between p-4 hover:bg-zinc-800/30 transition-colors"
+                    style={{ animationDelay: `${Math.min(idx * 30, 250)}ms` }}
+                    className="flex items-center justify-between p-3.5 hover:bg-surface-subtle transition-colors duration-150 animate-fade-in"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      {/* Status Toggle */}
                       <button
                         onClick={() => {
-                          const next =
+                          const nextStatus =
                             currentStatus === 'Not Started'
                               ? 'Attempted'
                               : currentStatus === 'Attempted'
                               ? 'Solved'
                               : 'Not Started';
-                          updateStatus(q.id, next);
+                          if (nextStatus === 'Solved') {
+                            setPoppingCheckId(q.id);
+                            setTimeout(() => setPoppingCheckId(null), 350);
+                          }
+                          updateStatus(q.id, nextStatus);
                         }}
-                        className="p-1 hover:bg-zinc-800 rounded transition-colors shrink-0"
+                        className="p-1 hover:bg-surface rounded transition-transform active:scale-90 shrink-0 cursor-pointer"
                         title="Click to cycle status"
                       >
                         {currentStatus === 'Solved' ? (
-                          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                          <CheckCircle2
+                            className={`w-4 h-4 text-primary ${
+                              poppingCheckId === q.id ? 'animate-check-pop' : ''
+                            }`}
+                          />
                         ) : currentStatus === 'Attempted' ? (
-                          <Clock className="w-4 h-4 text-amber-400" />
+                          <Clock className="w-4 h-4 text-secondary" />
                         ) : (
-                          <Circle className="w-4 h-4 text-zinc-600" />
+                          <Circle className="w-4 h-4 text-muted" />
                         )}
                       </button>
 
                       <div className="min-w-0">
                         <button
                           onClick={() => openDrawer(q)}
-                          className="text-sm font-medium text-zinc-200 hover:text-white transition-colors truncate block text-left"
+                          className="text-sm font-medium text-primary hover:underline transition-colors truncate block text-left cursor-pointer"
                         >
                           {q.title}
                         </button>
-                        <div className="flex items-center gap-2 text-xs text-zinc-500 mt-0.5">
-                          <span className="font-mono text-zinc-400">{q.topicName}</span>
+                        <div className="flex items-center gap-2 text-xs text-muted mt-0.5">
+                          <span className="font-mono">{q.topicName}</span>
                           <span>·</span>
                           <Badge variant="difficulty" difficulty={q.difficulty} />
                           <span>·</span>
                           <Badge variant="platform" platform={q.platform} />
                         </div>
-                        {progress[q.id]?.notes && (
-                          <p className="text-xs text-zinc-500 italic mt-1 font-mono truncate max-w-lg">
-                            Note: {progress[q.id].notes}
-                          </p>
-                        )}
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={() => {
+                          setPoppingStarId(q.id);
+                          setTimeout(() => setPoppingStarId(null), 350);
+                          toggleBookmark(q.id);
+                        }}
+                        className="p-1.5 text-primary hover:text-muted rounded hover:bg-surface transition-transform active:scale-90 cursor-pointer"
+                        title="Remove bookmark"
+                      >
+                        <Star
+                          className={`w-3.5 h-3.5 fill-current ${
+                            poppingStarId === q.id ? 'animate-star-pop' : ''
+                          }`}
+                        />
+                      </button>
+
                       <a
                         href={q.problemUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1.5 text-zinc-500 hover:text-sky-400 rounded hover:bg-zinc-800 transition-colors"
-                        title="Solve on external platform"
+                        className="p-1.5 text-muted hover:text-primary rounded hover:bg-surface transition-colors"
+                        title="Open external link"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
-
-                      <button
-                        onClick={() => toggleBookmark(q.id)}
-                        className="p-1.5 text-amber-400 hover:text-rose-400 rounded hover:bg-zinc-800 transition-colors"
-                        title="Remove bookmark"
-                      >
-                        <Star className="w-3.5 h-3.5 fill-amber-400" />
-                      </button>
 
                       <Button size="sm" variant="ghost" onClick={() => openDrawer(q)}>
                         Notes

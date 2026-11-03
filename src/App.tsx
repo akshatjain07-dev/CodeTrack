@@ -1,36 +1,52 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AppShell } from './components/layout/AppShell';
-import { DashboardPage } from './pages/DashboardPage';
-import { AllQuestionsPage } from './pages/AllQuestionsPage';
-import { BookmarksPage } from './pages/BookmarksPage';
-import { RevisionCenterPage } from './pages/RevisionCenterPage';
-import { AnalyticsPage } from './pages/AnalyticsPage';
-import { TopicsPage } from './pages/TopicsPage';
-import { PlatformsPage } from './pages/PlatformsPage';
-import { SettingsPage } from './pages/SettingsPage';
-import { LoginPage } from './pages/LoginPage';
+import { AuthProvider } from './context/AuthContext';
+import { ProgressProvider } from './context/ProgressContext';
+import { ProblemProvider } from './context/ProblemContext';
+import { Layout } from './components/Layout';
+import { Landing } from './pages/Landing';
+import { Dashboard } from './pages/Dashboard';
+import { ProblemLibrary } from './pages/ProblemLibrary';
+import { MyCollections } from './pages/MyCollections';
+import { RevisionDeck } from './pages/RevisionDeck';
+import { Analytics } from './pages/Analytics';
+import { Login } from './pages/Login';
+import { Settings } from './pages/Settings';
+import { AuthCallbackPage } from './pages/AuthCallbackPage';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
 export function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
+      <AuthProvider>
+        <ProgressProvider>
+          <ProblemProvider>
+          <Routes>
+            {/* Standalone Landing Page (No Sidebar) */}
+            <Route path="/" element={<Landing />} />
 
-        {/* Application Shell with persistent sidebar and headers */}
-        <Route path="/" element={<AppShell />}>
-          <Route index element={<DashboardPage />} />
-          <Route path="questions" element={<AllQuestionsPage />} />
-          <Route path="bookmarks" element={<BookmarksPage />} />
-          <Route path="revisions" element={<RevisionCenterPage />} />
-          <Route path="analytics" element={<AnalyticsPage />} />
-          <Route path="topics" element={<TopicsPage />} />
-          <Route path="platforms" element={<PlatformsPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-        </Route>
+            {/* Standalone Authentication & OAuth Callbacks */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/auth/callback" element={<AuthCallbackPage />} />
 
-        {/* Catch-all */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+            {/* Application Shell with Persistent Navigation Sidebar */}
+            <Route element={<ProtectedRoute />}>
+              <Route element={<Layout />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/library" element={<ProblemLibrary />} />
+                <Route path="/problems" element={<Navigate to="/library" replace />} />
+                <Route path="/collections" element={<MyCollections />} />
+                <Route path="/revision" element={<RevisionDeck />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/settings" element={<Settings />} />
+              </Route>
+            </Route>
+
+            {/* Catch-all redirect to landing page */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+          </ProblemProvider>
+        </ProgressProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
