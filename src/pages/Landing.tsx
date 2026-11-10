@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {
   CheckCircle2,
   Flame,
@@ -126,9 +126,9 @@ export const Landing: React.FC = () => {
       <header className="sticky top-0 z-40 w-full border-b border-[#27272A] bg-[#09090B]/85 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo on the left */}
-          <NavLink to="/" className="group flex items-center">
-            <Logo variant="horizontal" size="md" />
-          </NavLink>
+          <Link to="/" className="group flex items-center">
+            <Logo variant="horizontal" />
+          </Link>
 
           {/* Navigation links in center */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#A1A1AA]">

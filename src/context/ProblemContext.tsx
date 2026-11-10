@@ -13,7 +13,7 @@ import {
 import { useAuth } from './AuthContext';
 import { useProgress } from './ProgressContext';
 import { isSupabaseConfigured, upsertQuestionProgress, fetchUserProgress } from '../lib/supabase';
-import masterQuestionsRaw from '../data/dsaQuestions.json';
+import masterQuestionsRaw from '../data/masterQuestions';
 
 interface ProblemContextType {
   questions: DSAQuestion[];

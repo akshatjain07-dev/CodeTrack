@@ -37,11 +37,12 @@ export const Logo: React.FC<LogoProps> = ({
 
   const currentSize = sizeMap[size];
 
-  // The official CodeTrack Icon SVG
+  // The Classic CodeTrack Icon SVG
   // Features:
-  // 1. Left code bracket '<' that seamlessly transitions into a rising analytics trend line ending in an upward arrow '↗'
-  // 2. Accented with small glowing circuit / data nodes
-  // 3. Electric Indigo (#6366F1) to Emerald Green (#10B981) linear gradient
+  // 1. Two sturdy electric indigo (#6366F1) code brackets '< >'
+  // 2. Nestled inside: A precise emerald green (#10B981) track path and checkmark graphic with an upward arrow peak
+  // 3. Small connecting square data nodes at the base to represent Data Structures & Algorithms
+  // 4. Purely 2D, flat, solid design without intense gradient glow for an enterprise-grade feel
   const IconSvg = (
     <div
       className={`relative flex items-center justify-center flex-shrink-0 ${currentSize.icon} group-hover:scale-105 transition-transform duration-200`}
@@ -50,81 +51,89 @@ export const Logo: React.FC<LogoProps> = ({
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full drop-shadow-[0_2px_10px_rgba(99,102,241,0.35)]"
+        className="w-full h-full"
       >
-        <defs>
-          {/* Linear gradient: Electric Indigo (#6366F1) -> Emerald Green (#10B981) */}
-          <linearGradient id="ctGradientStroke" x1="4" y1="28" x2="36" y2="8" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#6366F1" />
-            <stop offset="55%" stopColor="#818CF8" />
-            <stop offset="100%" stopColor="#10B981" />
-          </linearGradient>
-
-          {/* Radial node glow */}
-          <radialGradient id="ctNodeGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="1" />
-            <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
-          </radialGradient>
-
-          {/* Soft background container gradient */}
-          <linearGradient id="ctBgGradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#18181B" />
-            <stop offset="100%" stopColor="#09090B" />
-          </linearGradient>
-        </defs>
-
-        {/* Squircle container background */}
+        {/* Flat squircle container background for contrast & definition */}
         <rect
           x="1"
           y="1"
           width="38"
           height="38"
-          rx="10"
-          fill="url(#ctBgGradient)"
+          rx="9"
+          fill="#141417"
           stroke="#27272A"
           strokeWidth="1.2"
         />
 
-        {/* Left code bracket '<' merging into rising analytics trend line ending in '↗' */}
+        {/* Left Code Bracket '<' in Electric Indigo (#6366F1) */}
         <path
-          d="M 14 11 L 7.5 19.5 L 14 27 L 18 22 L 23 25.5 L 32.5 11"
-          stroke="url(#ctGradientStroke)"
-          strokeWidth="2.75"
+          d="M 12.5 11 L 6 20 L 12.5 29"
+          stroke="#6366F1"
+          strokeWidth="2.8"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
 
-        {/* Upward arrow head '↗' at trend line peak */}
+        {/* Right Code Bracket '>' in Electric Indigo (#6366F1) */}
         <path
-          d="M 26 11 H 32.5 V 17.5"
+          d="M 27.5 11 L 34 20 L 27.5 29"
+          stroke="#6366F1"
+          strokeWidth="2.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+
+        {/* Track Path & Checkmark Graphic in Emerald Green (#10B981) */}
+        <path
+          d="M 15 19.5 L 19.5 24 L 27 12"
           stroke="#10B981"
-          strokeWidth="2.75"
+          strokeWidth="2.8"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
 
-        {/* Circuit / Data nodes at inflection vertices */}
-        {/* Node 1: Bracket vertex */}
-        <circle cx="7.5" cy="19.5" r="1.8" fill="#FAFAFA" />
-        <circle cx="7.5" cy="19.5" r="3.2" stroke="#6366F1" strokeWidth="0.8" opacity="0.6" />
+        {/* Upward-pointing trajectory arrow head at checkmark peak */}
+        <path
+          d="M 22.5 12 H 27 V 16.5"
+          stroke="#10B981"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
 
-        {/* Node 2: Trend valley inflection */}
-        <circle cx="18" cy="22" r="1.8" fill="#818CF8" />
+        {/* Track link from base data node to checkmark vertex */}
+        <line
+          x1="19.5"
+          y1="24"
+          x2="19.5"
+          y2="28"
+          stroke="#10B981"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
 
-        {/* Node 3: Mid-trend surge node */}
-        <circle cx="23" cy="25.5" r="1.8" fill="#10B981" />
-
-        {/* Node 4: Glowing peak arrow node */}
-        <circle cx="32.5" cy="11" r="2.2" fill="#10B981" />
-        <circle cx="32.5" cy="11" r="4.5" fill="url(#ctNodeGlow)" opacity="0.7" />
+        {/* Small Connecting Square Data Nodes at Base (DSA representation) */}
+        <line
+          x1="14"
+          y1="28.5"
+          x2="25"
+          y2="28.5"
+          stroke="#6366F1"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+        <rect x="12.5" y="27" width="3" height="3" rx="0.5" fill="#6366F1" />
+        <rect x="18" y="27" width="3" height="3" rx="0.5" fill="#10B981" />
+        <rect x="23.5" y="27" width="3" height="3" rx="0.5" fill="#6366F1" />
       </svg>
     </div>
   );
 
-  // The official CodeTrack Wordmark
-  // "code" in crisp white (#FAFAFA)
-  // "track" in Electric Indigo (#6366F1)
-  // "." (the period) in Emerald Green (#10B981)
+  // The "codetrack." Wordmark
+  // Modern, futuristic, geometric sans-serif lettering:
+  // - "code" in bold, crisp white (#FAFAFA)
+  // - "track" in electric indigo (#6366F1)
+  // - "." (the ending dot) in emerald green (#10B981)
   const Wordmark = (
     <span
       className={`font-black tracking-tight font-sans select-none flex items-center ${currentSize.text}`}

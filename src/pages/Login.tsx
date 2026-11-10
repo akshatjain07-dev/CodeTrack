@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Database,
   CheckCircle2,
@@ -42,7 +42,9 @@ export const Login: React.FC = () => {
 
       {/* Top Navbar */}
       <header className="relative z-10 flex items-center justify-between max-w-5xl mx-auto w-full">
-        <Logo variant="horizontal" size="md" showProBadge={true} />
+        <Link to="/" className="group flex items-center">
+          <Logo variant="horizontal" size="md" />
+        </Link>
 
         <button
           onClick={handleDemoAccess}

@@ -1,34 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
-  <defs>
-    <linearGradient id="ctGradientStroke" x1="4" y1="28" x2="36" y2="8" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#6366F1" />
-      <stop offset="55%" stop-color="#818CF8" />
-      <stop offset="100%" stop-color="#10B981" />
-    </linearGradient>
-    <radialGradient id="ctNodeGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#10B981" stop-opacity="1" />
-      <stop offset="100%" stop-color="#10B981" stop-opacity="0" />
-    </radialGradient>
-    <linearGradient id="ctBgGradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#18181B" />
-      <stop offset="100%" stop-color="#09090B" />
-    </linearGradient>
-  </defs>
+  <!-- Solid dark squircle background for browser tab contrast -->
+  <rect x="1" y="1" width="38" height="38" rx="9" fill="#141417" stroke="#27272A" stroke-width="1.2" />
 
-  <!-- Background squircle container -->
-  <rect x="1" y="1" width="38" height="38" rx="10" fill="url(#ctBgGradient)" stroke="#27272A" stroke-width="1.2" />
+  <!-- Electric Indigo Code Brackets < > (#6366F1) -->
+  <path d="M 12.5 11 L 6 20 L 12.5 29" stroke="#6366F1" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 27.5 11 L 34 20 L 27.5 29" stroke="#6366F1" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
 
-  <!-- Code bracket '<' transitioning into rising analytics trend line '↗' -->
-  <path d="M 14 11 L 7.5 19.5 L 14 27 L 18 22 L 23 25.5 L 32.5 11" stroke="url(#ctGradientStroke)" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Emerald Track Path & Checkmark Graphic with Arrow Peak (#10B981) -->
+  <path d="M 15 19.5 L 19.5 24 L 27 12" stroke="#10B981" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 22.5 12 H 27 V 16.5" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
 
-  <!-- Arrowhead '↗' -->
-  <path d="M 26 11 H 32.5 V 17.5" stroke="#10B981" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Track link to base data nodes -->
+  <line x1="19.5" y1="24" x2="19.5" y2="28" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" />
 
-  <!-- Circuit / Data nodes -->
-  <circle cx="7.5" cy="19.5" r="1.8" fill="#FAFAFA" />
-  <circle cx="7.5" cy="19.5" r="3.2" stroke="#6366F1" stroke-width="0.8" opacity="0.6" />
-  <circle cx="18" cy="22" r="1.8" fill="#818CF8" />
-  <circle cx="23" cy="25.5" r="1.8" fill="#10B981" />
-  <circle cx="32.5" cy="11" r="2.2" fill="#10B981" />
-  <circle cx="32.5" cy="11" r="4.5" fill="url(#ctNodeGlow)" opacity="0.7" />
+  <!-- Small Connecting Square Data Nodes at Base (DSA representation) -->
+  <line x1="14" y1="28.5" x2="25" y2="28.5" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round" />
+  <rect x="12.5" y="27" width="3" height="3" rx="0.5" fill="#6366F1" />
+  <rect x="18" y="27" width="3" height="3" rx="0.5" fill="#10B981" />
+  <rect x="23.5" y="27" width="3" height="3" rx="0.5" fill="#6366F1" />
 </svg>

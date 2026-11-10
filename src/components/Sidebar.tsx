@@ -16,9 +16,10 @@ import { useProblems } from '../context/ProblemContext';
 
 interface SidebarProps {
   onMobileClose?: () => void;
+  collapsed?: boolean;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ onMobileClose }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ onMobileClose, collapsed = false }) => {
   const { user, profile, signOut } = useAuth();
   const { stats } = useProblems();
   const navigate = useNavigate();
@@ -44,13 +45,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ onMobileClose }) => {
     <aside className="w-64 h-screen bg-[#18181B] border-r border-[#27272A] flex flex-col justify-between flex-shrink-0 select-none z-30">
       {/* Brand Header */}
       <div>
-        <div className="h-16 px-6 border-b border-[#27272A] flex items-center justify-between">
+        <div className={`h-16 ${collapsed ? 'px-3 justify-center' : 'px-6 justify-between'} border-b border-[#27272A] flex items-center`}>
           <NavLink
             to="/"
             onClick={onMobileClose}
             className="group flex items-center"
           >
-            <Logo variant="horizontal" size="md" showProBadge={true} />
+            {collapsed ? (
+              <Logo variant="icon" />
+            ) : (
+              <Logo variant="horizontal" size="md" />
+            )}
           </NavLink>
         </div>
 

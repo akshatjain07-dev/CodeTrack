@@ -18,6 +18,7 @@ def slugify(title):
     s = re.sub(r'[\(\)\[\]\{\}\',\"\-\.\?\:\!\*\/]', ' ', s)
     s = re.sub(r'\s+', '-', s).strip('-')
     return s
+    
 
 def normalize_for_match(title):
     t = title.lower()
